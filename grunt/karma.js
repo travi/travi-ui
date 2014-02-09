@@ -4,7 +4,7 @@ module.exports = {
         singleRun: true,
 
         preprocessors: {
-            "js/travi/**/*.js": 'coverage'
+            "js/**/*.js": 'coverage'
         },
 
         reporters: [
