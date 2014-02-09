@@ -3,7 +3,6 @@ module.exports = function (config) {
         frameworks: ['referee'],
 
         files: [
-            {pattern: 'templates/**/*.tmpl', included: false},
             {pattern: 'test/templates/**/*.tmpl', included: false},
 
             'node_modules/karma-jstd-adapter/jstd-adapter.js',
@@ -14,19 +13,19 @@ module.exports = function (config) {
             'bower_components/jquery-form/jquery.form.js',
             'bower_components/travi-test-utils/stubs/amplifyStub.js',
 
-            'js/travi.js',
+            'bower_components/travi-core/js/travi.js',
             'bower_components/travi-test-utils/tools/common.js',
-            'js/travi/templates.js',
+            'bower_components/travi-core/js/travi/templates.js',
             'test/resources/load-ui-templates.js',
-            'js/travi/events.js',
-            'js/travi/dependencies/checker.js',
-            'js/travi/ui/pagination.js',
+            'bower_components/travi-core/js/travi/events.js',
+            'bower_components/travi-core/js/travi/dependencies/checker.js',
+            'js/pagination.js',
             'bower_components/travi-test-utils/test-init.js',
-            'js/travi/ui/**/*.js',
+            'js/**/*.js',
 
             'bower_components/travi-test-utils/stubs/ajaxStub.js',
 
-            'test/ui/**/*.jstd'
+            'test/**/*.jstd'
         ],
 
         browsers: ['PhantomJS']

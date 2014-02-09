@@ -87,7 +87,7 @@ module.exports = {
     },
     uiTest: {
         src: [
-            'test/ui/**/*.jstd'
+            'test/**/*.jstd'
         ],
         directives: {
             browser: true,
