@@ -67,7 +67,7 @@
 
         $paginationControls.find('a').click(handleInteraction);
 
-        eventsModule.subscribe('page-loaded', updateLinks);
+        eventsModule.subscribe(constants.get('PAGE_EVENT'), updateLinks);
     }
 
     travi.register('ui.pagination', {
