@@ -88,6 +88,31 @@ travi.test.testCase("PaginationTest", (function () {
             assert.equals('/controller/?offset=' + newPrevOffset, $('a.prev').attr('href'));
         },
 
+        'test links updated properly after page loaded if multiple on page': function () {
+            var newPrevOffset = 'newPrev',
+                newNextOffset = 'newNext',
+                otherNext = 34,
+                otherPrev = -24;
+
+            $('body').append($.render.pagination({
+                controller: 'another-controller',
+                nextOffset: otherNext,
+                prevOffset: otherPrev
+            }));
+
+            this.pageLoadedCallback({
+                nextOffset: newNextOffset,
+                prevOffset: newPrevOffset
+            });
+
+            assertEquals(0, $('.pagination .' + this.HIDDEN_CLASS).length);
+            assertEquals('/controller/?offset=' + newNextOffset, $('a.more').attr('href'));
+            assertEquals('/controller/?offset=' + newPrevOffset, $('a.prev').attr('href'));
+
+            assertEquals('/another-controller/?offset=' + otherNext, $('a.more').attr('href'));
+            assertEquals('/another-controller/?offset=' + otherPrev, $('a.prev').attr('href'));
+        },
+
         'test prev link hidden when at beginning': function () {
             this.pageLoadedCallback({
                 offset: 0,
