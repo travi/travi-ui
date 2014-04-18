@@ -8,9 +8,13 @@ travi.test.testCase('dialog conventions', (function () {
 
     return {
         setUp: function () {
-            $('body').append('<a href="' + url + '" class="dialog-target"></a>');
+            $('body')
+                .append('<a href="' + url + '" class="dialog-target"></a>')
+                .append('<a href="' + url + '" class="different-class"></a>');
 
             sinon.stub(dialog, 'loadFromUrl');
+
+            conventions.init();
         },
 
         tearDown: function () {
@@ -21,11 +25,15 @@ travi.test.testCase('dialog conventions', (function () {
 
 
         'test that clicking on a link with the dialog-target class loads dialog from href': function () {
-            conventions.init();
-
             $('a.dialog-target').click();
 
-            sinon.assert.calledOnce(dialog.loadFromUrl);
+            sinon.assert.calledWith(dialog.loadFromUrl, url);
+        },
+
+        'test that link without dialog-target link does not load dialog': function () {
+            $('a.different-class').click();
+
+            sinon.assert.notCalled(dialog.loadFromUrl);
         }
     };
 }()));
