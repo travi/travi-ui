@@ -1,0 +1,27 @@
+travi.test.testCase('dialog api tests', (function () {
+    'use strict';
+
+    var dialog = travi.ui.dialog.simple;
+
+    return {
+        tearDown: function () {
+            travi.test.common.restore([
+                $.ajax
+            ]);
+        },
+
+        'test that html requested from url': function () {
+            var url = 'some url';
+            sinon.stub($, 'ajax');
+
+            dialog.loadFromUrl(url);
+
+            sinon.assert.calledOnce($.ajax);
+            sinon.assert.calledWith($.ajax, {
+                url: url,
+                dataType: 'html',
+                type: 'get'
+            });
+        }
+    };
+}()));
