@@ -21,6 +21,7 @@ travi.test.testCase('dialog conventions', (function () {
             travi.test.common.restore([
                 dialog.loadFromUrl
             ]);
+            $('body').off();
         },
 
 
@@ -34,6 +35,14 @@ travi.test.testCase('dialog conventions', (function () {
             $('a.different-class').click();
 
             sinon.assert.notCalled(dialog.loadFromUrl);
+        },
+
+        'test that dialog launched from link added after initialization': function () {
+            $('body').append('<a href="#" class="dialog-target new"></a>');
+
+            $('a.new').click();
+
+            sinon.assert.calledOnce(dialog.loadFromUrl);
         }
     };
 }()));

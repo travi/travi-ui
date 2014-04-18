@@ -3,7 +3,7 @@
 
     travi.register('ui.dialog.conventions', {
         init: function () {
-            $('a.dialog-target').click(function () {
+            $('body').on('click', 'a.dialog-target', function () {
                 travi.ui.dialog.simple.loadFromUrl($(this).attr('href'));
             });
         }
