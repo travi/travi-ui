@@ -26,9 +26,12 @@ travi.test.testCase('dialog conventions', (function () {
 
 
         'test that clicking on a link with the dialog-target class loads dialog from href': function () {
-            $('a.dialog-target').click();
+            var clickEvent = new $.Event('click');
+
+            $('a.dialog-target').trigger(clickEvent);
 
             sinon.assert.calledWith(dialog.loadFromUrl, url);
+            assertTrue(clickEvent.isDefaultPrevented());
         },
 
         'test that link without dialog-target link does not load dialog': function () {
