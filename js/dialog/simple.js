@@ -1,11 +1,13 @@
 (function (travi) {
     'use strict';
 
-    function renderDialogFromResponse(html) {
-        var $dialog = $(html);
+    function renderDialogFromResponse(options) {
+        var $dialog = $(options.html);
 
         $('body').append($dialog);
-        $dialog.dialog();
+        $dialog.dialog({
+            title: options.title
+        });
     }
 
     function loadFromUrl(options) {
@@ -13,7 +15,12 @@
             url: options.url,
             dataType: 'html',
             type: 'get',
-            success: renderDialogFromResponse
+            success: function (html) {
+                renderDialogFromResponse({
+                    html: html,
+                    title: options.title
+                });
+            }
         });
     }
 

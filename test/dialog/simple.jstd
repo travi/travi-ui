@@ -37,11 +37,13 @@ travi.test.testCase('dialog api tests', (function () {
         },
 
         'test that dialog launched, containing content from response': function () {
-            dialog.loadFromUrl({});
+            var title = any.string();
+            dialog.loadFromUrl({title: title});
 
             successHandler('<section id="' + insertedId + '">' + insertedContent + '</section>');
 
             assertEquals(insertedContent, $('.ui-dialog section#' + insertedId).text());
+            assertEquals(title, $('.ui-dialog-title').text());
         }
     };
 }()));

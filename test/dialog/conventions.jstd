@@ -1,15 +1,17 @@
 travi.test.testCase('dialog conventions', (function () {
     'use strict';
 
-    var conventions = travi.ui.dialog.conventions,
+    var any = travi.test.any,
+        conventions = travi.ui.dialog.conventions,
         dialog = travi.ui.dialog.simple,
 
-        url = 'someUrl';
+        url = any.string(),
+        linkText = any.string();
 
     return {
         setUp: function () {
             $('body')
-                .append('<a href="' + url + '" class="dialog-target"></a>')
+                .append('<a href="' + url + '" class="dialog-target">' + linkText + '</a>')
                 .append('<a href="' + url + '" class="different-class"></a>');
 
             sinon.stub(dialog, 'loadFromUrl');
@@ -31,7 +33,8 @@ travi.test.testCase('dialog conventions', (function () {
             $('a.dialog-target').trigger(clickEvent);
 
             sinon.assert.calledWith(dialog.loadFromUrl, {
-                url: url
+                url: url,
+                title: linkText
             });
             assertTrue(clickEvent.isDefaultPrevented());
         },
