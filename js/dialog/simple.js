@@ -5,7 +5,13 @@
         $.ajax({
             url: url,
             dataType: 'html',
-            type: 'get'
+            type: 'get',
+            success: function (html) {
+                var $dialog = $(html);
+
+                $('body').append($dialog);
+                $dialog.dialog();
+            }
         });
     }
 

@@ -1,9 +1,21 @@
 travi.test.testCase('dialog api tests', (function () {
     'use strict';
 
-    var dialog = travi.ui.dialog.simple;
+    var dialog = travi.ui.dialog.simple,
+        any = travi.test.any,
+
+        successHandler,
+
+        insertedId = 'fromAjax',
+        insertedContent = 'some content';
 
     return {
+        setUp: function () {
+            sinon.stub($, 'ajax', function (options) {
+                successHandler = options.success;
+            });
+        },
+
         tearDown: function () {
             travi.test.common.restore([
                 $.ajax
@@ -12,16 +24,22 @@ travi.test.testCase('dialog api tests', (function () {
 
         'test that html requested from url': function () {
             var url = 'some url';
-            sinon.stub($, 'ajax');
 
             dialog.loadFromUrl(url);
 
-            sinon.assert.calledOnce($.ajax);
-            sinon.assert.calledWith($.ajax, {
+            sinon.assert.calledWith($.ajax, sinon.match({
                 url: url,
                 dataType: 'html',
                 type: 'get'
-            });
+            }));
+        },
+
+        'test that dialog launched, containing content from response': function () {
+            dialog.loadFromUrl(any.string);
+
+            successHandler('<section id="' + insertedId + '">' + insertedContent + '</section>');
+
+            assertEquals(insertedContent, $('.ui-dialog section#' + insertedId).text());
         }
     };
 }()));
