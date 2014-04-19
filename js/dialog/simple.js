@@ -1,17 +1,19 @@
 (function (travi) {
     'use strict';
 
-    function loadFromUrl(url) {
+    function renderDialogFromResponse(html) {
+        var $dialog = $(html);
+
+        $('body').append($dialog);
+        $dialog.dialog();
+    }
+
+    function loadFromUrl(options) {
         $.ajax({
-            url: url,
+            url: options.url,
             dataType: 'html',
             type: 'get',
-            success: function (html) {
-                var $dialog = $(html);
-
-                $('body').append($dialog);
-                $dialog.dialog();
-            }
+            success: renderDialogFromResponse
         });
     }
 

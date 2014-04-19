@@ -25,7 +25,9 @@ travi.test.testCase('dialog api tests', (function () {
         'test that html requested from url': function () {
             var url = 'some url';
 
-            dialog.loadFromUrl(url);
+            dialog.loadFromUrl({
+                url: url
+            });
 
             sinon.assert.calledWith($.ajax, sinon.match({
                 url: url,
@@ -35,7 +37,7 @@ travi.test.testCase('dialog api tests', (function () {
         },
 
         'test that dialog launched, containing content from response': function () {
-            dialog.loadFromUrl(any.string);
+            dialog.loadFromUrl({});
 
             successHandler('<section id="' + insertedId + '">' + insertedContent + '</section>');
 

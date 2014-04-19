@@ -30,7 +30,9 @@ travi.test.testCase('dialog conventions', (function () {
 
             $('a.dialog-target').trigger(clickEvent);
 
-            sinon.assert.calledWith(dialog.loadFromUrl, url);
+            sinon.assert.calledWith(dialog.loadFromUrl, {
+                url: url
+            });
             assertTrue(clickEvent.isDefaultPrevented());
         },
 
