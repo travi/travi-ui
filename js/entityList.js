@@ -121,7 +121,8 @@
         $("#confirmation").dialog({
             autoOpen:   false,
             modal:      true,
-            resizable:  false
+            resizable:  false,
+            dialogClass: 'confirmation'
         });
         $('a.add-item').button({icons: {primary: 'ui-action-circle-plus'}});
 
