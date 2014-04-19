@@ -7,6 +7,7 @@
         $('body').append($dialog);
         $dialog.dialog({
             title: options.title,
+            modal: true,
             close: function () {
                 $(this).dialog('destroy').remove();
             }
