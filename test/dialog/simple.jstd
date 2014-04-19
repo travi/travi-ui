@@ -44,6 +44,15 @@ travi.test.testCase('dialog api tests', (function () {
 
             assertEquals(insertedContent, $('.ui-dialog section#' + insertedId).text());
             assertEquals(title, $('.ui-dialog-title').text());
+        },
+
+        'test that closing the dialog removes it from the DOM': function () {
+            dialog.loadFromUrl({});
+            successHandler('<section id="' + insertedId + '">' + insertedContent + '</section>');
+
+            $('#' + insertedId).dialog('close');
+
+            assertEquals(0, $('#' + insertedId).length);
         }
     };
 }()));

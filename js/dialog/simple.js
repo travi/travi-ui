@@ -6,7 +6,10 @@
 
         $('body').append($dialog);
         $dialog.dialog({
-            title: options.title
+            title: options.title,
+            close: function () {
+                $(this).dialog('destroy').remove();
+            }
         });
     }
 
