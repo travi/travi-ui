@@ -2,7 +2,8 @@
   "name": "travi-ui",
   "version": "0.7.1",
   "dependencies": {
-    "travi-core": ">=0.7.0"
+      "jquery-ui": "1.9.x",
+      "travi-core": ">=0.8.0"
   },
   "devDependencies": {
     "travi-test-utils": "latest"
