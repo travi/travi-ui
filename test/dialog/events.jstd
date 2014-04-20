@@ -1,0 +1,12 @@
+travi.test.testCase('dialog events', function () {
+    'use strict';
+
+    var dialogEvents = travi.ui.dialog.events;
+
+    return {
+        'test events are defined properly': function () {
+            assertObject(dialogEvents);
+            assertEquals('dialog-loaded', dialogEvents.keys.LOADED);
+        }
+    };
+}());

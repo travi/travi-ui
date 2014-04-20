@@ -1,8 +1,13 @@
 (function (travi) {
     'use strict';
 
+    var events = travi.events,
+        dialogEvents = travi.ui.dialog.events,
+
+        $dialog;
+
     function renderDialogFromResponse(options) {
-        var $dialog = $(options.html);
+        $dialog = $(options.html);
 
         $('body').append($dialog);
         $dialog.dialog({
@@ -23,6 +28,9 @@
                 renderDialogFromResponse({
                     html: html,
                     title: options.title
+                });
+                events.publish(dialogEvents.keys.LOADED, {
+                    $dialog: $dialog.get(0)
                 });
             }
         });

@@ -3,6 +3,7 @@ travi.test.testCase('dialog api tests', (function () {
 
     var dialog = travi.ui.dialog.simple,
         any = travi.test.any,
+        dialogEvents = travi.ui.dialog.events,
 
         successHandler,
 
@@ -14,11 +15,13 @@ travi.test.testCase('dialog api tests', (function () {
             sinon.stub($, 'ajax', function (options) {
                 successHandler = options.success;
             });
+            sinon.stub(travi.events, 'publish');
         },
 
         tearDown: function () {
             travi.test.common.restore([
-                $.ajax
+                $.ajax,
+                travi.events.publish
             ]);
         },
 
@@ -54,6 +57,15 @@ travi.test.testCase('dialog api tests', (function () {
             $('#' + insertedId).dialog('close');
 
             assertEquals(0, $('#' + insertedId).length);
+        },
+
+        'test that event published upon successful load': function () {
+            dialog.loadFromUrl({});
+            successHandler('<section></section>');
+
+            sinon.assert.calledWith(travi.events.publish, dialogEvents.keys.LOADED, {
+                $dialog: $('.ui-dialog-content').get(0)
+            });
         }
     };
 }()));
