@@ -6,6 +6,10 @@
 
         $dialog;
 
+    function close() {
+        $dialog.dialog('close');
+    }
+
     function renderDialogFromResponse(options) {
         $dialog = $(options.html);
 
@@ -30,13 +34,14 @@
                     title: options.title
                 });
                 events.publish(dialogEvents.keys.LOADED, {
-                    $dialog: $dialog.get(0)
+                    dialog: $dialog.get(0)
                 });
             }
         });
     }
 
     travi.register('ui.dialog.simple', {
-        loadFromUrl: loadFromUrl
+        loadFromUrl: loadFromUrl,
+        close: close
     });
 }(travi));

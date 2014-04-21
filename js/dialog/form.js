@@ -2,6 +2,7 @@
     'use strict';
 
     var events = travi.events,
+        dialog = travi.ui.dialog.simple,
         dialogEvents = travi.ui.dialog.events;
 
     function handleFormSubmission(e) {
@@ -10,7 +11,13 @@
 
         $.ajax({
             url: $form.attr('action'),
-            type: $form.attr('method') || 'get'
+            type: $form.attr('method') || 'get',
+            success: function () {
+                dialog.close();
+            },
+            statusCode: {
+                400: function () {}
+            }
         });
     }
 

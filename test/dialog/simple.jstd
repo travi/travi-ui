@@ -10,6 +10,10 @@ travi.test.testCase('dialog api tests', (function () {
         insertedId = 'fromAjax',
         insertedContent = 'some content';
 
+    function dialogClosedProperly() {
+        assertEquals(0, $('#' + insertedId).length);
+    }
+
     return {
         setUp: function () {
             sinon.stub($, 'ajax', function (options) {
@@ -56,7 +60,7 @@ travi.test.testCase('dialog api tests', (function () {
 
             $('#' + insertedId).dialog('close');
 
-            assertEquals(0, $('#' + insertedId).length);
+            dialogClosedProperly();
         },
 
         'test that event published upon successful load': function () {
@@ -64,8 +68,17 @@ travi.test.testCase('dialog api tests', (function () {
             successHandler('<section></section>');
 
             sinon.assert.calledWith(travi.events.publish, dialogEvents.keys.LOADED, {
-                $dialog: $('.ui-dialog-content').get(0)
+                dialog: $('.ui-dialog-content').get(0)
             });
+        },
+
+        'test that calling close programmatically closes the dialog': function () {
+            dialog.loadFromUrl({});
+            successHandler('<section id="' + insertedId + '"></section>');
+
+            dialog.close();
+
+            dialogClosedProperly();
         }
     };
 }()));

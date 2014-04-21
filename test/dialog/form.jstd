@@ -3,9 +3,12 @@ travi.test.testCase('dialog forms', (function () {
 
     var dialogForm = travi.ui.dialog.form,
         dialogEvents = travi.ui.dialog.events,
+        dialog = travi.ui.dialog.simple,
 
         testEvents = travi.test.events,
         any = travi.test.any,
+
+        ajaxCallbacks = {},
 
         formAction = any.string(),
         formMethod = any.string(),
@@ -16,13 +19,20 @@ travi.test.testCase('dialog forms', (function () {
             $('body').append($content);
 
             testEvents.stub();
-            sinon.stub($, 'ajax');
+            sinon.stub($, 'ajax', function (options) {
+                ajaxCallbacks.success = options.success;
+                ajaxCallbacks.badRequest = options.statusCode[400];
+            });
+            sinon.stub(dialog, 'close');
 
             dialogForm.init();
         },
 
         tearDown: function () {
-            travi.test.common.restore([$.ajax]);
+            travi.test.common.restore([
+                $.ajax,
+                dialog.close
+            ]);
             testEvents.restore();
         },
 
@@ -33,10 +43,10 @@ travi.test.testCase('dialog forms', (function () {
 
             $('form').submit();
 
-            sinon.assert.calledWith($.ajax, {
+            sinon.assert.calledWith($.ajax, sinon.match({
                 url: formAction,
                 type: formMethod
-            });
+            }));
         },
 
         'test that form submission defaults to GET if not specified': function () {
@@ -51,6 +61,28 @@ travi.test.testCase('dialog forms', (function () {
             sinon.assert.calledWith($.ajax, sinon.match({
                 type: 'get'
             }));
+        },
+
+        'test that dialog is closed after successful form submission': function () {
+            testEvents.publish(dialogEvents.keys.LOADED, {
+                $dialog: $content
+            });
+            $('form').submit();
+
+            ajaxCallbacks.success();
+
+            sinon.assert.calledOnce(dialog.close);
+        },
+
+        'test that dialog is not closed after validation error': function () {
+            testEvents.publish(dialogEvents.keys.LOADED, {
+                $dialog: $content
+            });
+            $('form').submit();
+
+            ajaxCallbacks.badRequest();
+
+            sinon.assert.notCalled(dialog.close);
         }
     };
 }()));
