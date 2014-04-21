@@ -16,7 +16,9 @@
                 dialog.close();
             },
             statusCode: {
-                400: function () {}
+                400: function () {
+                    return;
+                }
             }
         });
     }

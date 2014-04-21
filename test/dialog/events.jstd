@@ -1,4 +1,4 @@
-travi.test.testCase('dialog events', function () {
+travi.test.testCase('dialog events', (function () {
     'use strict';
 
     var dialogEvents = travi.ui.dialog.events;
@@ -9,4 +9,4 @@ travi.test.testCase('dialog events', function () {
             assertEquals('dialog-loaded', dialogEvents.keys.LOADED);
         }
     };
-}());
+}()));
