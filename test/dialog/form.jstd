@@ -1,0 +1,41 @@
+travi.test.testCase('dialog forms', (function () {
+    'use strict';
+
+    var dialogForm = travi.ui.dialog.form,
+        dialogEvents = travi.ui.dialog.events,
+
+        testEvents = travi.test.events,
+        any = travi.test.any,
+
+        formAction = any.string(),
+        formMethod = any.string();
+
+    return {
+        setUp: function () {
+            var $content = $('<section><form method="' + formMethod + '" action="' + formAction + '"></form></section>');
+            $('body').append($content);
+
+            testEvents.stub();
+            sinon.stub($, 'ajax');
+
+            dialogForm.init();
+            testEvents.publish(dialogEvents.keys.LOADED, {
+                $dialog: $content
+            });
+        },
+
+        tearDown: function () {
+            travi.test.common.restore([$.ajax]);
+            testEvents.restore();
+        },
+
+        'test submitting form from dialog content triggers ajax request': function () {
+            $('form').submit();
+
+            sinon.assert.calledWith($.ajax, {
+                url: formAction,
+                type: formMethod
+            });
+        }
+    };
+}()));
