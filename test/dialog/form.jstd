@@ -45,7 +45,8 @@ travi.test.testCase('dialog forms', (function () {
 
             sinon.assert.calledWith($.ajax, sinon.match({
                 url: formAction,
-                type: formMethod
+                type: formMethod,
+                dataType: 'json'
             }));
         },
 

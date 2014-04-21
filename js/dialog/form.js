@@ -12,6 +12,7 @@
         $.ajax({
             url: $form.attr('action'),
             type: $form.attr('method') || 'get',
+            dataType: 'json',   
             success: function () {
                 dialog.close();
             },
