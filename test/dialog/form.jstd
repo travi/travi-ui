@@ -12,7 +12,9 @@ travi.test.testCase('dialog forms', (function () {
 
         formAction = any.string(),
         formMethod = any.string(),
-        $content = $('<section><form method="' + formMethod + '" action="' + formAction + '"></form></section>');
+        fieldName = any.string(),
+        fieldValue = any.string(),
+        $content = $('<section><form method="' + formMethod + '" action="' + formAction + '"><input name="' + fieldName + '" value="' + fieldValue + '"></input></form></section>');
 
     return {
         setUp: function () {
@@ -46,7 +48,8 @@ travi.test.testCase('dialog forms', (function () {
             sinon.assert.calledWith($.ajax, sinon.match({
                 url: formAction,
                 type: formMethod,
-                dataType: 'json'
+                dataType: 'json',
+                data: fieldName + '=' + fieldValue
             }));
         },
 
