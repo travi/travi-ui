@@ -8,20 +8,17 @@ travi.test.testCase('dialog forms', (function () {
         any = travi.test.any,
 
         formAction = any.string(),
-        formMethod = any.string();
+        formMethod = any.string(),
+        $content = $('<section><form method="' + formMethod + '" action="' + formAction + '"></form></section>');
 
     return {
         setUp: function () {
-            var $content = $('<section><form method="' + formMethod + '" action="' + formAction + '"></form></section>');
             $('body').append($content);
 
             testEvents.stub();
             sinon.stub($, 'ajax');
 
             dialogForm.init();
-            testEvents.publish(dialogEvents.keys.LOADED, {
-                $dialog: $content
-            });
         },
 
         tearDown: function () {
@@ -30,12 +27,30 @@ travi.test.testCase('dialog forms', (function () {
         },
 
         'test submitting form from dialog content triggers ajax request': function () {
+            testEvents.publish(dialogEvents.keys.LOADED, {
+                $dialog: $content
+            });
+
             $('form').submit();
 
             sinon.assert.calledWith($.ajax, {
                 url: formAction,
                 type: formMethod
             });
+        },
+
+        'test that form submission defaults to GET if not specified': function () {
+            var $formNoMethod = $('<section><form action="' + formAction + '"></form></section>');
+            $('body').html($formNoMethod);
+            testEvents.publish(dialogEvents.keys.LOADED, {
+                $dialog: $formNoMethod
+            });
+
+            $('form').submit();
+
+            sinon.assert.calledWith($.ajax, sinon.match({
+                type: 'get'
+            }));
         }
     };
 }()));

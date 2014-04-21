@@ -10,7 +10,7 @@
 
         $.ajax({
             url: $form.attr('action'),
-            type: $form.attr('method')
+            type: $form.attr('method') || 'get'
         });
     }
 
