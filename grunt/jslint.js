@@ -42,17 +42,8 @@ module.exports = {
                 'travi',
 
                 'sinon',
-                'assertEquals',
-                'assertSame',
-                'assertNotSame',
-                'assertString',
-                'assertObject',
-                'assertFunction',
                 'assert',
-                'refute',
-                'assertFalse',
-                'assertTrue',
-                'expectAsserts'
+                'refute'
             ]
         },
         options: {

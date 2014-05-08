@@ -36,14 +36,14 @@ travi.test.testCase("PaginationTest", (function () {
         },
 
         'test events defined properly': function () {
-            assertObject(this.pagination.events);
-            assertEquals('next-page-requested', this.pagination.events.NEXT_PAGE_REQUESTED);
-            assertEquals('prev-page-requested', this.pagination.events.PREV_PAGE_REQUESTED);
+            assert.isObject(this.pagination.events);
+            assert.equals('next-page-requested', this.pagination.events.NEXT_PAGE_REQUESTED);
+            assert.equals('prev-page-requested', this.pagination.events.PREV_PAGE_REQUESTED);
         },
 
         'test out-of-range class defined properly': function () {
-            assertObject(this.pagination.constants);
-            assertEquals('outOfRange', this.pagination.constants.get('HIDDEN_CLASS'));
+            assert.isObject(this.pagination.constants);
+            assert.equals('outOfRange', this.pagination.constants.get('HIDDEN_CLASS'));
         },
 
         'test clicking next-page link triggers proper event': function () {
@@ -53,11 +53,11 @@ travi.test.testCase("PaginationTest", (function () {
 
             sinon.assert.calledOnce(this.events.publish);
             call = this.events.publish.getCall(0);
-            assertEquals(
+            assert.equals(
                 this.pagination.events.NEXT_PAGE_REQUESTED,
                 call.args[0]
             );
-            assertEquals('/controller/?offset=34', call.args[1].url);
+            assert.equals('/controller/?offset=34', call.args[1].url);
         },
 
         'test clicking prev-page link triggers proper event': function () {
@@ -67,11 +67,11 @@ travi.test.testCase("PaginationTest", (function () {
 
             assert(this.events.publish.calledOnce);
             call = this.events.publish.getCall(0);
-            assertEquals(
+            assert.equals(
                 this.pagination.events.PREV_PAGE_REQUESTED,
                 call.args[0]
             );
-            assertEquals('/controller/?offset=-24', call.args[1].url);
+            assert.equals('/controller/?offset=-24', call.args[1].url);
         },
 
         'test links updated properly after page loaded': function () {
@@ -83,9 +83,9 @@ travi.test.testCase("PaginationTest", (function () {
                 prevOffset: newPrevOffset
             });
 
-            assertEquals(0, $('.pagination .' + this.HIDDEN_CLASS).length);
-            assertEquals('/controller/?offset=' + newNextOffset, $('a.more').attr('href'));
-            assertEquals('/controller/?offset=' + newPrevOffset, $('a.prev').attr('href'));
+            assert.equals(0, $('.pagination .' + this.HIDDEN_CLASS).length);
+            assert.equals('/controller/?offset=' + newNextOffset, $('a.more').attr('href'));
+            assert.equals('/controller/?offset=' + newPrevOffset, $('a.prev').attr('href'));
         },
 
         'test prev link hidden when at beginning': function () {
@@ -95,9 +95,9 @@ travi.test.testCase("PaginationTest", (function () {
                 prevOffset: -5
             });
 
-            assertTrue($('a.prev').parent().hasClass(this.HIDDEN_CLASS));
-            assertTrue($('li.pipeDivider').hasClass(this.HIDDEN_CLASS));
-            assertFalse($('a.more').parent().hasClass(this.HIDDEN_CLASS));
+            assert($('a.prev').parent().hasClass(this.HIDDEN_CLASS));
+            assert($('li.pipeDivider').hasClass(this.HIDDEN_CLASS));
+            refute($('a.more').parent().hasClass(this.HIDDEN_CLASS));
         },
 
         'test next link hidden when at end': function () {
@@ -108,9 +108,9 @@ travi.test.testCase("PaginationTest", (function () {
                 total: 4
             });
 
-            assertTrue($('a.more').parent().hasClass(this.HIDDEN_CLASS));
-            assertTrue($('li.pipeDivider').hasClass(this.HIDDEN_CLASS));
-            assertFalse($('a.prev').parent().hasClass(this.HIDDEN_CLASS));
+            assert($('a.more').parent().hasClass(this.HIDDEN_CLASS));
+            assert($('li.pipeDivider').hasClass(this.HIDDEN_CLASS));
+            refute($('a.prev').parent().hasClass(this.HIDDEN_CLASS));
         }
     };
 }()));

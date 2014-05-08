@@ -11,7 +11,7 @@ travi.test.testCase('dialog api tests', (function () {
         insertedContent = 'some content';
 
     function dialogClosedProperly() {
-        assertEquals(0, $('#' + insertedId).length);
+        assert.equals(0, $('#' + insertedId).length);
     }
 
     return {
@@ -49,9 +49,9 @@ travi.test.testCase('dialog api tests', (function () {
 
             successHandler('<section id="' + insertedId + '">' + insertedContent + '</section>');
 
-            assertEquals(insertedContent, $('.ui-dialog section#' + insertedId).text());
-            assertEquals(title, $('.ui-dialog-title').text());
-            assertTrue($('#' + insertedId).dialog('option', 'modal'));
+            assert.equals(insertedContent, $('.ui-dialog section#' + insertedId).text());
+            assert.equals(title, $('.ui-dialog-title').text());
+            assert($('#' + insertedId).dialog('option', 'modal'));
         },
 
         'test that closing the dialog removes it from the DOM': function () {

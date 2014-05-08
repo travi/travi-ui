@@ -65,16 +65,16 @@ travi.test.testCase('EntityListTests', (function () {
         },
 
         'test events defined properly': function () {
-            assertEquals('page-loaded', this.entityList.constants.get('PAGE_EVENT'));
+            assert.equals('page-loaded', this.entityList.constants.get('PAGE_EVENT'));
         },
 
         'test confirmation ready for use': function () {
-            assertEquals(this.$confirmation.length, 1);
+            assert.equals(this.$confirmation.length, 1);
             assert(this.$confirmation.is(':not(:visible)'));
 
-            assertTrue(this.$confirmation.dialog('option', 'modal'));
-            assertFalse(this.$confirmation.dialog('option', 'resizable'));
-            assertFalse(this.$confirmation.dialog('option', 'autoOpen'));
+            assert(this.$confirmation.dialog('option', 'modal'));
+            refute(this.$confirmation.dialog('option', 'resizable'));
+            refute(this.$confirmation.dialog('option', 'autoOpen'));
         },
 
         'test submitting "remove" form shows confirmation': function () {
@@ -84,7 +84,7 @@ travi.test.testCase('EntityListTests', (function () {
         },
 
         'test form gets converted to link': function () {
-            assertEquals(1, this.$form.length);
+            assert.equals(1, this.$form.length);
             assert(this.$form.is(':not(:visible)'));
             assert($("li.remove-item a.item-action.icon-remove").is(':visible'));
         },
@@ -99,7 +99,7 @@ travi.test.testCase('EntityListTests', (function () {
             sinon.stub(jQuery, 'ajax', function (options) {
                 options.success({});
             });
-            assertEquals(1, $('.entityList>li').length);
+            assert.equals(1, $('.entityList>li').length);
             $('a.item-action').click();
             $('.ui-dialog-buttonpane button').eq(0).click();
 
@@ -110,7 +110,7 @@ travi.test.testCase('EntityListTests', (function () {
             }));
             assert($.ajax.getCall(0).args[0].url.indexOf('/admin/updates/45') !== -1);
 
-            assertEquals(0, $('.entityList>li').length);
+            assert.equals(0, $('.entityList>li').length);
         },
 
         'test request for next page loads more announcements': function () {
@@ -173,29 +173,29 @@ travi.test.testCase('EntityListTests', (function () {
 //            dataType: 'json'
 //        }, jQuery.ajax.getCall(0).args[0]);
 //
-//        assertEquals(this.entities.length, $('.entityList > li').length);
+//        assert.equals(this.entities.length, $('.entityList > li').length);
 //
 //        assert(travi.publish.calledOnce);
 //        call = travi.publish.getCall(0);
-//        assertEquals(this.entityList.constants.get('PAGE_EVENT'), call.args[0]);
-//        assertEquals(5, call.args[1].nextOffset);
-//        assertEquals(-5, call.args[1].prevOffset);
-//        assertEquals(0, call.args[1].offset);
+//        assert.equals(this.entityList.constants.get('PAGE_EVENT'), call.args[0]);
+//        assert.equals(5, call.args[1].nextOffset);
+//        assert.equals(-5, call.args[1].prevOffset);
+//        assert.equals(0, call.args[1].offset);
 //    },
 
         assertModalDialogIsShown: function () {
             assert(this.$confirmation.is(':visible'));
-            assertEquals(1, $('.confirmation').length);
-            assertEquals(1, $('div.ui-widget-overlay').length, 1);
+            assert.equals(1, $('.confirmation').length);
+            assert.equals(1, $('div.ui-widget-overlay').length, 1);
         },
 
         assertLoadedDataAddedToList: function () {
-            assertEquals(this.entities.length, $('.entityList > li').length);
-            assertEquals(this.entities.length, $('.entityList > li.entityBlock').length);
-            assertEquals(1, $('.entityList > li.someType').length);
-            assertEquals(this.entities.length, $('.entityList li.remove-item').length);
-            assertEquals(this.entities.length, $("li.remove-item form").length);
-            assertEquals(0, $("li.remove-item form:visible").length);
+            assert.equals(this.entities.length, $('.entityList > li').length);
+            assert.equals(this.entities.length, $('.entityList > li.entityBlock').length);
+            assert.equals(1, $('.entityList > li.someType').length);
+            assert.equals(this.entities.length, $('.entityList li.remove-item').length);
+            assert.equals(this.entities.length, $("li.remove-item form").length);
+            assert.equals(0, $("li.remove-item form:visible").length);
 
             this.assertEventPublished();
         },
@@ -206,13 +206,13 @@ travi.test.testCase('EntityListTests', (function () {
 
             assert(this.events.publish.calledOnce);
             call = this.events.publish.getCall(0);
-            assertEquals(this.entityList.constants.get('PAGE_EVENT'), call.args[0]);
+            assert.equals(this.entityList.constants.get('PAGE_EVENT'), call.args[0]);
 
             eventData = call.args[1];
-            assertEquals(15, eventData.nextOffset);
-            assertEquals(5, eventData.prevOffset);
-            assertEquals(10, eventData.offset);
-            assertEquals(34, eventData.total);
+            assert.equals(15, eventData.nextOffset);
+            assert.equals(5, eventData.prevOffset);
+            assert.equals(10, eventData.offset);
+            assert.equals(34, eventData.total);
         },
 
         stubRequestForAnnouncements: function () {

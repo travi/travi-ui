@@ -5,8 +5,8 @@ travi.test.testCase('dialog events', (function () {
 
     return {
         'test events are defined properly': function () {
-            assertObject(dialogEvents);
-            assertEquals('dialog-loaded', dialogEvents.keys.LOADED);
+            assert.isObject(dialogEvents);
+            assert.equals('dialog-loaded', dialogEvents.keys.LOADED);
         }
     };
 }()));

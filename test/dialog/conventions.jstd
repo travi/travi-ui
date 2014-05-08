@@ -32,17 +32,17 @@ travi.test.testCase('dialog conventions', (function () {
 
             $('a.dialog-target').trigger(clickEvent);
 
-            sinon.assert.calledWith(dialog.loadFromUrl, {
+            assert.calledWith(dialog.loadFromUrl, {
                 url: url,
                 title: linkText
             });
-            assertTrue(clickEvent.isDefaultPrevented());
+            assert(clickEvent.isDefaultPrevented());
         },
 
         'test that link without dialog-target link does not load dialog': function () {
             $('a.different-class').click();
 
-            sinon.assert.notCalled(dialog.loadFromUrl);
+            refute.called(dialog.loadFromUrl);
         },
 
         'test that dialog launched from link added after initialization': function () {
@@ -50,7 +50,7 @@ travi.test.testCase('dialog conventions', (function () {
 
             $('a.new').click();
 
-            sinon.assert.calledOnce(dialog.loadFromUrl);
+            assert.calledOnce(dialog.loadFromUrl);
         }
     };
 }()));
