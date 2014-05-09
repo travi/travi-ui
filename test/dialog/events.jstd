@@ -1,8 +1,7 @@
 travi.test.testCase('dialog events', (function () {
     'use strict';
 
-    var events = travi.events,
-        dialogEvents = travi.ui.dialog.events;
+    var dialogEvents = travi.ui.dialog.events;
 
     return {
         tearDown: function () {
