@@ -1,12 +1,26 @@
 travi.test.testCase('dialog events', (function () {
     'use strict';
 
-    var dialogEvents = travi.ui.dialog.events;
+    var events = travi.events,
+        dialogEvents = travi.ui.dialog.events;
 
     return {
+        tearDown: function () {
+            travi.test.events.restore();
+        },
+
         'test events are defined properly': function () {
-            assert.isObject(dialogEvents);
             assert.equals('dialog-loaded', dialogEvents.keys.LOADED);
+        },
+
+        'test registering to load event': function () {
+            travi.test.events.stub();
+            var callback = sinon.spy();
+            dialogEvents.load(callback);
+
+            travi.test.events.publish(dialogEvents.keys.LOADED);
+
+            assert.calledOnce(callback);
         }
     };
 }()));
