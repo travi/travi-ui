@@ -1,0 +1,41 @@
+travi.test.testCase('rich text field', (function () {
+    'use strict';
+
+    var richText = travi.ui.form.richText,
+        postInit;
+
+    return {
+        setUp: function () {
+            sinon.stub($.prototype, 'wymeditor', function (options) {
+                postInit = options.postInit;
+            });
+
+            $('body').append('<form><textarea class="richEditor"></textarea></form>');
+
+            richText.init();
+        },
+
+        tearDown: function () {
+            travi.test.common.restore([
+                $.prototype.wymeditor
+            ]);
+        },
+
+        'test wym is initialized': function () {
+            sinon.assert.calledWith($.prototype.wymeditor, sinon.match({
+                skin: 'silver',
+                updateSelector: 'form'
+            }));
+        },
+
+        'test fullscreen button made available': function () {
+            var fullscreen = sinon.spy();
+
+            postInit({
+                fullscreen: fullscreen
+            });
+
+            sinon.assert.calledOnce(fullscreen);
+        }
+    };
+}()));

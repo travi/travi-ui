@@ -3,7 +3,9 @@
   "version": "0.9.0",
   "dependencies": {
       "jquery-ui": "1.9.x",
-      "travi-core": ">=0.8.0"
+      "travi-core": ">=0.8.0",
+      "wymeditor": "latest",
+      "jquery-migrate": "1.2.1"
   },
   "devDependencies": {
     "travi-test-utils": "latest"
