@@ -6,8 +6,8 @@
         "url": "http://github.com/travi/travi-core.git"
     },
     "devDependencies": {
-        "grunt": "~0.4.1",
-        "grunt-jslint": "~1.0.0",
+        "grunt": "~0.4.4",
+        "grunt-jslint": "~1.1.11",
         "karma": "~0.12.15",
         "karma-phantomjs-launcher": "~0.1.4",
         "karma-jstd-adapter": "0.0.3",
@@ -15,8 +15,8 @@
         "karma-coverage": "~0.2.1",
         "karma-referee": "~0.4.0",
         "grunt-karma": "~0.8.3",
-        "grunt-karma-coveralls": "~2.2.0",
-        "load-grunt-config": "~0.7.0",
+        "grunt-karma-coveralls": "~2.5.0",
+        "load-grunt-config": "~0.9.1",
         "grunt-bump": "0.0.13"
     },
     "scripts": {
