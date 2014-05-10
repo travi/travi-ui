@@ -2,8 +2,4 @@ gates:
   - jslint
   - karma
 
-travis:
-  - gates
-  - coveralls
-
 default: gates

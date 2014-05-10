@@ -20,6 +20,6 @@
         "grunt-bump": "0.0.13"
     },
     "scripts": {
-        "test": "grunt travis"
+        "test": "grunt"
     }
 }
