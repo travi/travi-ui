@@ -53,6 +53,7 @@ travi.test.testCase('dialog api tests', (function () {
             assert.equals(insertedContent, $('.ui-dialog section#' + insertedId).text());
             assert.equals(title, $('.ui-dialog-title').text());
             assert($('#' + insertedId).dialog('option', 'modal'));
+            assert.equals('auto', $('#' + insertedId).dialog('option', 'width'));
         },
 
         'test that closing the dialog removes it from the DOM': function () {
@@ -82,7 +83,7 @@ travi.test.testCase('dialog api tests', (function () {
             dialogClosedProperly();
         },
 
-        'test that calling recenter programmatically recenters the dialog': function () {
+        'test that calling recenter programmatically re-centers the dialog': function () {
             sinon.stub($.prototype, 'dialog');
 
             dialog.recenter();

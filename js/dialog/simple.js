@@ -25,6 +25,7 @@
         $dialog.dialog({
             title: options.title,
             modal: true,
+            width: 'auto',
             close: function () {
                 $(this).dialog('destroy').remove();
             }
