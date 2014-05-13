@@ -11,7 +11,11 @@
     }
 
     function recenter() {
-        return;
+        $dialog.dialog('option', 'position', {
+            my: 'center',
+            at: 'center',
+            of: window
+        });
     }
 
     function renderDialogFromResponse(options) {

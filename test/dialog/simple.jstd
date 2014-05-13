@@ -25,7 +25,8 @@ travi.test.testCase('dialog api tests', (function () {
         tearDown: function () {
             travi.test.common.restore([
                 $.ajax,
-                travi.events.publish
+                travi.events.publish,
+                $.prototype.dialog
             ]);
         },
 
@@ -79,6 +80,18 @@ travi.test.testCase('dialog api tests', (function () {
             dialog.close();
 
             dialogClosedProperly();
+        },
+
+        'test that calling recenter programmatically recenters the dialog': function () {
+            sinon.stub($.prototype, 'dialog');
+
+            dialog.recenter();
+
+            assert.calledWith($.prototype.dialog, 'option', 'position', {
+                my: 'center',
+                at: 'center',
+                of: window
+            });
         }
     };
 }()));
