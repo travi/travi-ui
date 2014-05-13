@@ -1,6 +1,9 @@
 (function (travi) {
     'use strict';
 
+    var events = travi.events,
+        dialog = travi.ui.dialog.simple;
+
     function enhanceLinkIntoDialog(e) {
         var $link = $(e.target);
         e.preventDefault();
@@ -11,8 +14,19 @@
         });
     }
 
-    function init() {
+    function bindToApplicationEvents() {
+        events.subscribe(travi.ui.dialog.events.keys.RESIZED, function () {
+            dialog.recenter();
+        });
+    }
+
+    function bindToDomEvents() {
         $('body').on('click', 'a.dialog-target', enhanceLinkIntoDialog);
+    }
+
+    function init() {
+        bindToDomEvents();
+        bindToApplicationEvents();
     }
 
     travi.register('ui.dialog.conventions', {

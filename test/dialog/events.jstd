@@ -10,6 +10,7 @@ travi.test.testCase('dialog events', (function () {
 
         'test events are defined properly': function () {
             assert.equals('dialog-loaded', dialogEvents.keys.LOADED);
+            assert.equals('resized', dialogEvents.keys.RESIZED);
         },
 
         'test registering to load event': function () {

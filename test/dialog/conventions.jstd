@@ -4,6 +4,7 @@ travi.test.testCase('dialog conventions', (function () {
     var any = travi.test.any,
         conventions = travi.ui.dialog.conventions,
         dialog = travi.ui.dialog.simple,
+        dialogEvents = travi.ui.dialog.events,
 
         url = any.string(),
         linkText = any.string();
@@ -15,17 +16,19 @@ travi.test.testCase('dialog conventions', (function () {
                 .append('<a href="' + url + '" class="different-class"></a>');
 
             sinon.stub(dialog, 'loadFromUrl');
+            travi.test.events.stub();
 
             conventions.init();
         },
 
         tearDown: function () {
             travi.test.common.restore([
-                dialog.loadFromUrl
+                dialog.loadFromUrl,
+                dialog.recenter
             ]);
+            travi.test.events.restore();
             $('body').off();
         },
-
 
         'test that clicking on a link with the dialog-target class loads dialog from href': function () {
             var clickEvent = new $.Event('click');
@@ -51,6 +54,14 @@ travi.test.testCase('dialog conventions', (function () {
             $('a.new').click();
 
             assert.calledOnce(dialog.loadFromUrl);
+        },
+
+        'test that dialog is re-centered when content is re-sized': function () {
+            sinon.stub(dialog, 'recenter');
+
+            travi.test.events.publish(dialogEvents.keys.RESIZED);
+
+            assert.calledOnce(dialog.recenter);
         }
     };
 }()));

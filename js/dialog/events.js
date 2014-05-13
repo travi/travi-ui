@@ -2,7 +2,8 @@
     'use strict';
 
     var keys = {
-        LOADED: 'dialog-loaded'
+        LOADED: 'dialog-loaded',
+        RESIZED: 'resized'
     };
 
     function load(callback) {

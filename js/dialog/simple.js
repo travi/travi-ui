@@ -10,6 +10,10 @@
         $dialog.dialog('close');
     }
 
+    function recenter() {
+        return;
+    }
+
     function renderDialogFromResponse(options) {
         $dialog = $(options.html);
 
@@ -42,6 +46,7 @@
 
     travi.register('ui.dialog.simple', {
         loadFromUrl: loadFromUrl,
+        recenter: recenter,
         close: close
     });
 }(travi));
