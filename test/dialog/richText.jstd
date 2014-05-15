@@ -1,0 +1,43 @@
+travi.test.testCase('rich text area in a dialog', (function () {
+    'use strict';
+
+    var dialogRichText = travi.ui.dialog.richText,
+        events = travi.events,
+        dialogEvents = travi.ui.dialog.events,
+        richText = travi.ui.form.richText,
+
+        loadCallback;
+
+    return {
+        setUp: function () {
+            sinon.stub(richText, 'init');
+            sinon.stub(dialogEvents, 'load', function (callback) {
+                loadCallback = callback;
+            });
+
+            dialogRichText.init();
+        },
+
+        tearDown: function () {
+            travi.test.common.restore([
+                travi.events,
+                richText.init,
+                dialogEvents.load,
+                events.publish
+            ]);
+        },
+
+        'test that the rich text area is initialized once the dialog loads': function () {
+            sinon.stub(events, 'publish');
+
+            loadCallback();
+
+            assert.calledOnce(richText.init);
+            assert.calledWith(events.publish, dialogEvents.keys.RESIZED);
+        },
+
+        'test that the rich text area is not initialized before the dialog opens': function () {
+            refute.called(richText.init);
+        }
+    };
+}()));
