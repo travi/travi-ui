@@ -1,6 +1,18 @@
 travi.test.testCase("PaginationTest", (function () {
     'use strict';
 
+    function assertThatOtherPaginationDataUnchanged(otherNext, otherPrev) {
+        assert.equals(2, $('.pagination').eq(0).find('.' + this.HIDDEN_CLASS).length);
+        assert.equals('/controller/?offset=' + otherNext, $('a.more').eq(0).attr('href'));
+        assert.equals('/controller/?offset=' + otherPrev, $('a.prev').eq(0).attr('href'));
+    }
+
+    function assertThatUpdatedControlsInCorrectState(newNextOffset, newPrevOffset) {
+        assert.equals(0, $('.pagination').eq(1).find('.' + this.HIDDEN_CLASS).length);
+        assert.equals('/another-controller/?offset=' + newNextOffset, $('a.more').eq(1).attr('href'));
+        assert.equals('/another-controller/?offset=' + newPrevOffset, $('a.prev').eq(1).attr('href'));
+    }
+
     return {
         pagination: travi.ui.pagination,
         events: travi.events,
@@ -80,7 +92,8 @@ travi.test.testCase("PaginationTest", (function () {
 
             this.pageLoadedCallback({
                 nextOffset: newNextOffset,
-                prevOffset: newPrevOffset
+                prevOffset: newPrevOffset,
+                resource: 'controller'
             });
 
             assert.equals(0, $('.pagination .' + this.HIDDEN_CLASS).length);
@@ -89,35 +102,35 @@ travi.test.testCase("PaginationTest", (function () {
         },
 
         'test links updated properly after page loaded if multiple on page': function () {
-            var newPrevOffset = 'newPrev',
-                newNextOffset = 'newNext',
+            var newPrevOffset = 45,
+                newNextOffset = 50,
                 otherNext = 34,
                 otherPrev = -24;
 
             $('body').append($.render.pagination({
                 controller: 'another-controller',
                 nextOffset: otherNext,
-                prevOffset: otherPrev
+                prevOffset: otherPrev,
+                total: 70,
+                offset: 5
             }));
 
             this.pageLoadedCallback({
                 nextOffset: newNextOffset,
-                prevOffset: newPrevOffset
+                prevOffset: newPrevOffset,
+                resource: 'another-controller'
             });
 
-            assertEquals(0, $('.pagination .' + this.HIDDEN_CLASS).length);
-            assertEquals('/controller/?offset=' + newNextOffset, $('a.more').attr('href'));
-            assertEquals('/controller/?offset=' + newPrevOffset, $('a.prev').attr('href'));
-
-            assertEquals('/another-controller/?offset=' + otherNext, $('a.more').attr('href'));
-            assertEquals('/another-controller/?offset=' + otherPrev, $('a.prev').attr('href'));
+            assertThatOtherPaginationDataUnchanged.call(this, otherNext, otherPrev);
+            assertThatUpdatedControlsInCorrectState.call(this, newNextOffset, newPrevOffset);
         },
 
         'test prev link hidden when at beginning': function () {
             this.pageLoadedCallback({
                 offset: 0,
                 nextOffset: 5,
-                prevOffset: -5
+                prevOffset: -5,
+                resource: 'controller'
             });
 
             assert($('a.prev').parent().hasClass(this.HIDDEN_CLASS));
@@ -130,7 +143,8 @@ travi.test.testCase("PaginationTest", (function () {
                 offset: 1,
                 nextOffset: 5,
                 prevOffset: -5,
-                total: 4
+                total: 4,
+                resource: 'controller'
             });
 
             assert($('a.more').parent().hasClass(this.HIDDEN_CLASS));

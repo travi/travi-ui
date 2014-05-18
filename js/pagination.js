@@ -6,8 +6,6 @@
 
         $paginationControls,
         $divider,
-        $moreLink,
-        $prevLink,
 
         events = {
             NEXT_PAGE_REQUESTED: 'next-page-requested',
@@ -37,33 +35,34 @@
         $link.attr('href', $link.attr('href').replace(/offset=[\-\d]*/, 'offset=' + newOffset));
     }
 
-    function updateLinkVisibility(eventData) {
+    function updateLinkVisibility(eventData, $paginationControls) {
         var HIDDEN_CLASS = constants.get('HIDDEN_CLASS');
 
         $paginationControls.find('li').removeClass(HIDDEN_CLASS);
 
         if (eventData.offset === 0) {
-            $prevLink.parent().addClass(HIDDEN_CLASS);
+            $paginationControls.find('a.prev').parent().addClass(HIDDEN_CLASS);
             $divider.addClass(HIDDEN_CLASS);
         }
         if (eventData.total < eventData.nextOffset) {
-            $moreLink.parent().addClass(HIDDEN_CLASS);
+            $paginationControls.find('a.more').parent().addClass(HIDDEN_CLASS);
             $divider.addClass(HIDDEN_CLASS);
         }
     }
 
     function updateLinks(eventData) {
+        var $moreLink = $('ul.pagination a.more[href^="/' + eventData.resource + '"]'),
+            $prevLink = $('ul.pagination a.prev[href^="/' + eventData.resource + '"]');
+
         updateOffset($moreLink, eventData.nextOffset);
         updateOffset($prevLink, eventData.prevOffset);
 
-        updateLinkVisibility(eventData);
+        updateLinkVisibility(eventData, $moreLink.closest('ul.pagination'));
     }
 
     function init() {
         $paginationControls = $('ul.pagination');
         $divider = $paginationControls.find('li.pipeDivider');
-        $moreLink = $paginationControls.find('a.more');
-        $prevLink = $paginationControls.find('a.prev');
 
         $paginationControls.find('a').click(handleInteraction);
 
