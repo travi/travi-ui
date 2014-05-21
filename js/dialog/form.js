@@ -26,7 +26,7 @@
     }
 
     function enhanceForm(data) {
-        data.$dialog.find('form').submit(handleFormSubmission);
+        $(data.dialog).find('form').submit(handleFormSubmission);
     }
 
     function init() {

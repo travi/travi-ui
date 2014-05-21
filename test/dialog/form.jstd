@@ -40,7 +40,7 @@ travi.test.testCase('dialog forms', (function () {
 
         'test submitting form from dialog content triggers ajax request': function () {
             testEvents.publish(dialogEvents.keys.LOADED, {
-                $dialog: $content
+                dialog: $content.get(0)
             });
 
             $('form').submit();
@@ -57,7 +57,7 @@ travi.test.testCase('dialog forms', (function () {
             var $formNoMethod = $('<section><form action="' + formAction + '"></form></section>');
             $('body').html($formNoMethod);
             testEvents.publish(dialogEvents.keys.LOADED, {
-                $dialog: $formNoMethod
+                dialog: $formNoMethod.get(0)
             });
 
             $('form').submit();
@@ -69,7 +69,7 @@ travi.test.testCase('dialog forms', (function () {
 
         'test that dialog is closed after successful form submission': function () {
             testEvents.publish(dialogEvents.keys.LOADED, {
-                $dialog: $content
+                dialog: $content.get(0)
             });
             $('form').submit();
 
@@ -80,7 +80,7 @@ travi.test.testCase('dialog forms', (function () {
 
         'test that dialog is not closed after validation error': function () {
             testEvents.publish(dialogEvents.keys.LOADED, {
-                $dialog: $content
+                dialog: $content.get(0)
             });
             $('form').submit();
 
