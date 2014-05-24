@@ -16,3 +16,9 @@ unit:
   coverageReporter:
     type: lcov
     dir: 'logs/coverage/'
+
+
+integration:
+  configFile: cucumber.conf.js
+  singleRun: true,
+
