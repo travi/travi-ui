@@ -15,6 +15,7 @@ module.exports = function (config) {
             'bower_components/wymeditor/dist/wymeditor/jquery.wymeditor.js',
 
             'bower_components/travi-core/js/travi.js',
+            'test/resources/registerProxy.js',
             'bower_components/travi-core/js/travi/dependencies/checker.js',
             'bower_components/travi-core/js/travi/events.js',
 

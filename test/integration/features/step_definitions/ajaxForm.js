@@ -6,6 +6,8 @@ addStepDefinitions(function (scenario) {
 
 
     scenario.Before(function (callback) {
+        this.simulatePageLoad();
+
         $.mockjax({
             url: formPage,
             responseText: '<section id="dialogContent"><form action="' + formSubmission + '" method="post"></form></section>'

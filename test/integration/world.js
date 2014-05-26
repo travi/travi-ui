@@ -12,6 +12,10 @@ addStepDefinitions(function (scenario) {
     // want to use with your Cucumber step definitions
     var proto = scenario.World.prototype;
 
+    proto.simulatePageLoad = function simulatePageLoad() {
+        travi.reload();
+    };
+
     proto.cleanUp = function cleanUp() {
         $('#scratch').empty();
 
