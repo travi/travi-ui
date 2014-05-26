@@ -2,7 +2,6 @@
 addStepDefinitions(function (scenario) {
     'use strict';
 
-
     // Provide a custom World constructor. It's optional, a default one is supplied.
     scenario.World = function (callback) {
         callback();
@@ -13,12 +12,17 @@ addStepDefinitions(function (scenario) {
     var proto = scenario.World.prototype;
 
     proto.simulatePageLoad = function simulatePageLoad() {
+        sinon.spy($, 'ajax');
+
         travi.reload();
     };
 
     proto.cleanUp = function cleanUp() {
+        $('body').off();
         $('#scratch').empty();
 
         amplify.restore();
+        $.ajax.restore();
+        $.mockjaxClear();
     };
 });

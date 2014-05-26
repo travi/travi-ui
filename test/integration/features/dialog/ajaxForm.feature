@@ -2,6 +2,10 @@ Feature: Forms in dialogs should be automatically ajaxified
 
   Scenario: dialog is closed after successful form submission
     Given a dialog containing a form has been launched
-    Given the form has been submitted
-    When a successful response is received
+    When the form has been submitted successfully
     Then the dialog should be closed
+
+  Scenario: dialog stays open after form submission failure
+    Given a dialog containing a form has been launched
+    When the form has been submitted with a failure
+    Then the dialog should still be open
