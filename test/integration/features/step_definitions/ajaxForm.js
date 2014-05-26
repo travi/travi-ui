@@ -2,27 +2,6 @@ addStepDefinitions(function (scenario) {
     var formPage = '/some/url',
         formSubmission = '/form/submission';
 
-    // Provide a custom World constructor. It's optional, a default one is supplied.
-    scenario.World = function (callback) {
-        callback();
-    };
-
-
-
-    // Define your World, here is where you can add some custom utlity functions you
-    // want to use with your Cucumber step definitions, this is usually moved out
-    // to its own file that you include in your Karma config
-    var proto = scenario.World.prototype;
-    proto.appSpecificUtilityFunction = function someHelperFunc() {
-        // do some common stuff with your app
-    };
-    proto.cleanUp = function cleanUp() {
-        $('#scratch').empty();
-
-        amplify.restore();
-    };
-
-
 
     scenario.Before(function (callback) {
         // Use a custom utility function
@@ -42,10 +21,6 @@ addStepDefinitions(function (scenario) {
 
         callback();
     });
-
-
-
-
 
     scenario.Given(/^a dialog containing a form has been launched$/, function(callback) {
         $('#scratch').append('<a href="' + formPage + '" class="dialog-target" id="dialogLink"></a>');

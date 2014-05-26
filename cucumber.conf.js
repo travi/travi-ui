@@ -29,6 +29,7 @@ module.exports = function (config) {
 
             {pattern: 'test/integration/features/**/*.feature', watched: true, included: false, served: true},
 
+            'test/integration/world.js',
             {pattern: 'test/integration/features/step_definitions/**/*.js', watched: true, included: true, served: true}
         ],
 
