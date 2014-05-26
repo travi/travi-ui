@@ -21,7 +21,7 @@
     }
 
     global.amplify = {
-        publish: realAmplify.publish,
+        publish: global.realAmplify.publish,
         subscribe: subscribe,
         restore: restore
     };

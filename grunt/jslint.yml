@@ -20,7 +20,9 @@ dist:
     errorsOnly: true
     checkstyle: logs/jslint-ui.xml
 test:
-  src: 'test/**/*.jstd'
+  src:
+    - 'test/**/*.jstd'
+    - 'test/**/*.js'
   directives:
     browser: true
     predef:
@@ -30,6 +32,7 @@ test:
       - sinon
       - assert
       - refute
+      - addStepDefinitions
   options:
     errorsOnly: true
     checkstyle: logs/jslint-ui-test.xml

@@ -1,3 +1,4 @@
+/*global amplify */
 addStepDefinitions(function (scenario) {
     'use strict';
 
@@ -10,12 +11,10 @@ addStepDefinitions(function (scenario) {
     // Define your World, here is where you can add some custom utility functions you
     // want to use with your Cucumber step definitions
     var proto = scenario.World.prototype;
-    proto.appSpecificUtilityFunction = function someHelperFunc() {
-        // do some common stuff with your app
-    };
+
     proto.cleanUp = function cleanUp() {
         $('#scratch').empty();
 
         amplify.restore();
     };
-})
+});
