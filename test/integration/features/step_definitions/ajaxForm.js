@@ -16,6 +16,11 @@ addStepDefinitions(function (scenario) {
     proto.appSpecificUtilityFunction = function someHelperFunc() {
         // do some common stuff with your app
     };
+    proto.cleanUp = function cleanUp() {
+        $('#scratch').empty();
+
+        amplify.restore();
+    };
 
 
 
@@ -79,7 +84,7 @@ addStepDefinitions(function (scenario) {
 
 
     scenario.After(function (callback) {
-        $('#scratch').empty();
+        this.cleanUp();
 
         callback();
     });

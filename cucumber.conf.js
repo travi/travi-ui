@@ -7,6 +7,7 @@ module.exports = function (config) {
 
         files: [
             'bower_components/amplify/core/amplify.core.js',
+            'test/resources/amplifyProxy.js',
             'bower_components/jquery/jquery.js',
             'bower_components/jquery-ui/ui/jquery-ui.js',
             'bower_components/jquery-mockjax/jquery.mockjax.js',
