@@ -14,8 +14,13 @@
     }
 
     function restore() {
-        for (var i = 0; i < cache.length; i++) {
-            var subscription = cache[i];
+        var i,
+            subscription,
+            cacheSize = cache.length;
+
+        for (i = 0; i < cacheSize; i += 1) {
+            subscription = cache[i];
+
             global.realAmplify.unsubscribe(subscription.name, subscription.callback);
         }
 

@@ -3,7 +3,8 @@ addStepDefinitions(function (scenario) {
     'use strict';
 
     var expectedResponseStatus,
-        responseHeaders = {};
+        responseHeaders = {},
+        proto = scenario.World.prototype;
 
     function clearAjax() {
         $.ajax.restore();
@@ -19,15 +20,6 @@ addStepDefinitions(function (scenario) {
         travi.ui.dialog.simple.close();
     }
 
-    // Provide a custom World constructor. It's optional, a default one is supplied.
-    scenario.World = function (callback) {
-        callback();
-    };
-
-    // Define your World, here is where you can add some custom utility functions you
-    // want to use with your Cucumber step definitions
-    var proto = scenario.World.prototype;
-
     proto.simulatePageLoad = function simulatePageLoad() {
         sinon.spy($, 'ajax');
 
@@ -41,34 +33,35 @@ addStepDefinitions(function (scenario) {
     };
 
     proto.getDeferredFromRequestTo = function getDeferredFromRequestTo(url) {
-        for (var i = 0; i < $.ajax.callCount; i++) {
-            var call = $.ajax.getCall(i);
+        var i,
+            call;
 
-            var url2 = call.args[0].url;
-            console.log(url2);
-            if (url === url2) {
+        for (i = 0; i < $.ajax.callCount; i += 1) {
+            call = $.ajax.getCall(i);
+
+            if (url === call.args[0].url) {
                 return $.ajax.returnValues[i];
             }
         }
 
         return null;
-    }
+    };
 
     proto.setExpectedResponseStatus = function setExpectedResponseStatus(status) {
         if (!expectedResponseStatus) {
             expectedResponseStatus = status;
         }
-    }
+    };
 
     proto.getExpectedResponseStatus = function getExpectedResponseStatus() {
         return expectedResponseStatus;
-    }
+    };
 
     proto.addHeader = function addHeader(name, value) {
         responseHeaders[name] = value;
-    }
+    };
 
     proto.getResponseHeaders = function getResponseHeaders() {
         return responseHeaders;
-    }
+    };
 });
