@@ -2,6 +2,23 @@
 addStepDefinitions(function (scenario) {
     'use strict';
 
+    var expectedResponseStatus,
+        responseHeaders = {};
+
+    function clearAjax() {
+        $.ajax.restore();
+        $.mockjaxClear();
+
+        expectedResponseStatus = null;
+        responseHeaders = {};
+    }
+
+    function cleanUpDom() {
+        $('body').off();
+        $('#scratch').empty();
+        travi.ui.dialog.simple.close();
+    }
+
     // Provide a custom World constructor. It's optional, a default one is supplied.
     scenario.World = function (callback) {
         callback();
@@ -18,11 +35,40 @@ addStepDefinitions(function (scenario) {
     };
 
     proto.cleanUp = function cleanUp() {
-        $('body').off();
-        $('#scratch').empty();
-
+        cleanUpDom();
         amplify.restore();
-        $.ajax.restore();
-        $.mockjaxClear();
+        clearAjax();
     };
+
+    proto.getDeferredFromRequestTo = function getDeferredFromRequestTo(url) {
+        for (var i = 0; i < $.ajax.callCount; i++) {
+            var call = $.ajax.getCall(i);
+
+            var url2 = call.args[0].url;
+            console.log(url2);
+            if (url === url2) {
+                return $.ajax.returnValues[i];
+            }
+        }
+
+        return null;
+    }
+
+    proto.setExpectedResponseStatus = function setExpectedResponseStatus(status) {
+        if (!expectedResponseStatus) {
+            expectedResponseStatus = status;
+        }
+    }
+
+    proto.getExpectedResponseStatus = function getExpectedResponseStatus() {
+        return expectedResponseStatus;
+    }
+
+    proto.addHeader = function addHeader(name, value) {
+        responseHeaders[name] = value;
+    }
+
+    proto.getResponseHeaders = function getResponseHeaders() {
+        return responseHeaders;
+    }
 });

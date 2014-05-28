@@ -1,23 +1,25 @@
 (function (global) {
     'use strict';
 
-    var cache = {};
+    var cache = [];
 
     global.realAmplify = global.amplify;
 
     function subscribe(name, callback) {
-        cache[name] = callback;
+        cache.push({
+            name: name,
+            callback: callback
+        });
         global.realAmplify.subscribe(name, callback);
     }
 
     function restore() {
-        var name;
-
-        for (name in cache) {
-            if (cache.hasOwnProperty(name)) {
-                global.realAmplify.unsubscribe(name, cache[name]);
-            }
+        for (var i = 0; i < cache.length; i++) {
+            var subscription = cache[i];
+            global.realAmplify.unsubscribe(subscription.name, subscription.callback);
         }
+
+        cache = [];
     }
 
     global.amplify = {
