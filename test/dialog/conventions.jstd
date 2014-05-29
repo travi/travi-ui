@@ -7,13 +7,16 @@ travi.test.testCase('dialog conventions', (function () {
         dialogEvents = travi.ui.dialog.events,
 
         url = any.string(),
-        linkText = any.string();
+        otherUrl = any.string(),
+        linkText = any.string(),
+        otherLinkText = any.string();
 
     return {
         setUp: function () {
             $('body')
                 .append('<a href="' + url + '" class="dialog-target">' + linkText + '</a>')
-                .append('<a href="' + url + '" class="different-class"></a>');
+                .append('<a href="' + otherUrl + '" class="dialog-target"><span>' + otherLinkText + '</span></a>')
+                .append('<a href="' + any.string() + '" class="different-class"></a>');
 
             sinon.stub(dialog, 'loadFromUrl');
             travi.test.events.stub();
@@ -40,6 +43,15 @@ travi.test.testCase('dialog conventions', (function () {
                 title: linkText
             });
             assert(clickEvent.isDefaultPrevented());
+        },
+
+        'test that clicking on a span within a dialog-target link loads dialog from the links href': function () {
+            $('a.dialog-target span').click();
+
+            assert.calledWith(dialog.loadFromUrl, {
+                url: otherUrl,
+                title: otherLinkText
+            });
         },
 
         'test that link without dialog-target link does not load dialog': function () {

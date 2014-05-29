@@ -5,7 +5,7 @@
         dialog = travi.ui.dialog.simple;
 
     function enhanceLinkIntoDialog(e) {
-        var $link = $(e.target);
+        var $link = $(e.target).closest('a');
         e.preventDefault();
 
         travi.ui.dialog.simple.loadFromUrl({
