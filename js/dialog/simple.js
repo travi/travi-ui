@@ -7,7 +7,9 @@
         $dialog;
 
     function close() {
-        $dialog.dialog('close');
+        if ($dialog) {
+            $dialog.dialog('close');
+        }
     }
 
     function recenter() {
@@ -28,6 +30,7 @@
             width: 'auto',
             close: function () {
                 $(this).dialog('destroy').remove();
+                $dialog = null;
             }
         });
     }

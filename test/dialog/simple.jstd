@@ -83,7 +83,19 @@ travi.test.testCase('dialog api tests', (function () {
             dialogClosedProperly();
         },
 
+        'test that closing programmatically when no dialog is open does not throw error': function () {
+            dialog.loadFromUrl({});
+            successHandler('<section id="' + insertedId + '"></section>');
+
+            dialog.close();
+
+            dialog.close();
+
+        },
+
         'test that calling recenter programmatically re-centers the dialog': function () {
+            dialog.loadFromUrl({});
+            successHandler('<section id="' + insertedId + '"></section>');
             sinon.stub($.prototype, 'dialog');
 
             dialog.recenter();

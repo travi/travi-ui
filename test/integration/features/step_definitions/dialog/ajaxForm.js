@@ -1,15 +1,18 @@
 addStepDefinitions(function (scenario) {
     'use strict';
 
-    var formPage = '/some/url',
-        formSubmission = '/form/submission',
-        formSubmissionSuccess;
+    var any = travi.test.any,
+
+        formPage = any.string(),
+        formSubmission = any.string();
 
     function dialogIsOpen() {
         return $('#dialogContent').length === 1;
     }
 
     scenario.Before(function (callback) {
+        var world = this;
+
         this.simulatePageLoad();
 
         $.mockjax({
@@ -20,11 +23,14 @@ addStepDefinitions(function (scenario) {
         $.mockjax({
             url: formSubmission,
             response: function () {
-                if (formSubmissionSuccess) {
-                    this.status = 200;
-                } else {
-                    this.status = 500;
+                this.status = world.getExpectedResponseStatus();
+
+                var responseHeaders = world.getResponseHeaders();
+                if (responseHeaders) {
+                    this.headers = responseHeaders;
                 }
+
+                this.responseText = {};
             }
         });
 
@@ -36,7 +42,7 @@ addStepDefinitions(function (scenario) {
 
         $('#dialogLink').click();
 
-        $.ajax.returnValues[0].then(function () {
+        this.getDeferredFromRequestTo(formPage).then(function () {
             if (dialogIsOpen()) {
                 callback();
             } else {
@@ -46,17 +52,17 @@ addStepDefinitions(function (scenario) {
     });
 
     scenario.When(/^the form has been submitted successfully$/, function (callback) {
-        formSubmissionSuccess = true;
+        this.setExpectedResponseStatus(200);
 
         $('form').submit();
 
-        $.ajax.returnValues[1].then(function () {
+        this.getDeferredFromRequestTo(formSubmission).then(function () {
             callback();
         });
     });
 
     scenario.When(/^the form has been submitted with a failure$/, function (callback) {
-        formSubmissionSuccess = false;
+        this.setExpectedResponseStatus(500);
 
         $('form').submit();
 

@@ -9,20 +9,30 @@
         var $form = $(this);
         e.preventDefault();
 
+        /*jslint unparam: true */
         $.ajax({
             url: $form.attr('action'),
             type: $form.attr('method') || 'get',
             dataType: 'json',
             data: $form.serialize(),
-            success: function () {
-                dialog.close();
-            },
             statusCode: {
+                201: function (data, status, xhr) {
+                    $.ajax({
+                        url: xhr.getResponseHeader('Location'),
+                        success: function () {
+                            $('ol.entityList').append('<li></li>');
+                        }
+                    });
+                },
                 400: function () {
                     return;
                 }
+            },
+            success: function () {
+                dialog.close();
             }
         });
+        /*jslint unparam: false */
     }
 
     function enhanceForm(data) {

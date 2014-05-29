@@ -20,5 +20,5 @@ unit:
 
 integration:
   configFile: cucumber.conf.js
-  singleRun: true,
+  singleRun: true
 

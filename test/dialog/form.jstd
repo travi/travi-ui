@@ -14,7 +14,17 @@ travi.test.testCase('dialog forms', (function () {
         formMethod = any.string(),
         fieldName = any.string(),
         fieldValue = any.string(),
-        $content = $('<section><form method="' + formMethod + '" action="' + formAction + '"><input name="' + fieldName + '" value="' + fieldValue + '"></input></form></section>');
+        $content = $('<section><form method="' + formMethod + '" action="' + formAction + '"><input name="' + fieldName + '" value="' + fieldValue + '"></input></form></section>'),
+        addedEntityUrl = any.string(),
+        addedEntitySuccess;
+
+    function launchDialogAndSubmitForm() {
+        testEvents.publish(dialogEvents.keys.LOADED, {
+            dialog: $content.get(0)
+        });
+        $('form').submit();
+        $.ajax.reset();
+    }
 
     return {
         setUp: function () {
@@ -22,8 +32,13 @@ travi.test.testCase('dialog forms', (function () {
 
             testEvents.stub();
             sinon.stub($, 'ajax', function (options) {
-                ajaxCallbacks.success = options.success;
-                ajaxCallbacks.badRequest = options.statusCode[400];
+                if (options.url === formAction) {
+                    ajaxCallbacks.success = options.success;
+                    ajaxCallbacks.badRequest = options.statusCode[400];
+                    ajaxCallbacks.added = options.statusCode[201];
+                } else if (options.url === addedEntityUrl) {
+                    addedEntitySuccess = options.success;
+                }
             });
             sinon.stub(dialog, 'close');
 
@@ -87,6 +102,38 @@ travi.test.testCase('dialog forms', (function () {
             ajaxCallbacks.badRequest();
 
             sinon.assert.notCalled(dialog.close);
+        },
+
+        'test that details about added entity requested after successful addition': function () {
+            var xhr = {
+                getResponseHeader: function () {
+                    return addedEntityUrl;
+                }
+            };
+            sinon.spy(xhr, 'getResponseHeader');
+            launchDialogAndSubmitForm();
+
+            ajaxCallbacks.added(null, null, xhr);
+
+            assert.calledWith(xhr.getResponseHeader, 'Location');
+            assert.calledWith($.ajax, sinon.match({
+                url: addedEntityUrl
+            }));
+        },
+
+        'test that item added to entity list as result of 201': function () {
+            $('body').append('<ol class="entityList"></ol>');
+            launchDialogAndSubmitForm();
+
+            ajaxCallbacks.added(null, null, {
+                getResponseHeader: function () {
+                    return addedEntityUrl;
+                }
+            });
+
+            addedEntitySuccess();
+
+            assert.equals($('ol.entityList li').length, 1);
         }
     };
 }()));
