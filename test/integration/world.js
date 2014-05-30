@@ -4,7 +4,8 @@ addStepDefinitions(function (scenario) {
 
     var expectedResponseStatus,
         responseHeaders = {},
-        proto = scenario.World.prototype;
+        proto = scenario.World.prototype,
+        server;
 
     function clearAjax() {
         $.ajax.restore();
@@ -22,6 +23,7 @@ addStepDefinitions(function (scenario) {
 
     proto.simulatePageLoad = function simulatePageLoad() {
         sinon.spy($, 'ajax');
+        server = sinon.fakeServer.create();
 
         travi.reload();
     };
@@ -30,6 +32,7 @@ addStepDefinitions(function (scenario) {
         cleanUpDom();
         amplify.restore();
         clearAjax();
+        server.restore();
     };
 
     proto.getDeferredFromRequestTo = function getDeferredFromRequestTo(url) {
