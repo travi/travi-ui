@@ -35,6 +35,10 @@ addStepDefinitions(function (scenario) {
         server.restore();
     };
 
+    proto.getServer = function getServer() {
+        return server;
+    };
+
     proto.getDeferredFromRequestTo = function getDeferredFromRequestTo(url) {
         var i,
             call;

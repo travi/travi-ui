@@ -11,8 +11,6 @@ addStepDefinitions(function (scenario) {
     }
 
     scenario.Before(function (callback) {
-        var world = this;
-
         this.simulatePageLoad();
 
         $.mockjax({
@@ -20,19 +18,19 @@ addStepDefinitions(function (scenario) {
             responseText: '<section id="dialogContent"><form action="' + formSubmission + '" method="post"></form></section>'
         });
 
-        $.mockjax({
-            url: formSubmission,
-            response: function () {
-                this.status = world.getExpectedResponseStatus();
-
-                var responseHeaders = world.getResponseHeaders();
-                if (responseHeaders) {
-                    this.headers = responseHeaders;
-                }
-
-                this.responseText = {};
-            }
-        });
+//        $.mockjax({
+//            url: formSubmission,
+//            response: function () {
+//                this.status = world.getExpectedResponseStatus();
+//
+//                var responseHeaders = world.getResponseHeaders();
+//                if (responseHeaders) {
+//                    this.headers = responseHeaders;
+//                }
+//
+//                this.responseText = {foo: 'bar'};
+//            }
+//        });
 
         callback();
     });
@@ -53,9 +51,11 @@ addStepDefinitions(function (scenario) {
 
     scenario.When(/^the form has been submitted successfully$/, function (callback) {
         this.setExpectedResponseStatus(200);
+        this.getServer().respondWith([201, this.getResponseHeaders(), '{}']);
 
         $('form').submit();
 
+        this.getServer().respond();
         this.getDeferredFromRequestTo(formSubmission).then(function () {
             callback();
         });
@@ -63,10 +63,12 @@ addStepDefinitions(function (scenario) {
 
     scenario.When(/^the form has been submitted with a failure$/, function (callback) {
         this.setExpectedResponseStatus(500);
+        this.getServer().respondWith([500, {}, "Failure"]);
 
         $('form').submit();
 
-        $.ajax.returnValues[1].then(
+        this.getServer().respond();
+        this.getDeferredFromRequestTo(formSubmission).then(
             function () {
                 callback.fail("Shouldn't have gotten a successful response");
             },

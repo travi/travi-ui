@@ -23,6 +23,7 @@ addStepDefinitions(function (scenario) {
     });
 
     scenario.Given(/^add button has been clicked$/, function (callback) {
+        this.getServer().respondWith([201, {Location: addedEntity}, '{}']);
         this.setExpectedResponseStatus(201);
         this.addHeader('Location', addedEntity);
 
