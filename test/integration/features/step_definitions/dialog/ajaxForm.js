@@ -18,20 +18,6 @@ addStepDefinitions(function (scenario) {
             responseText: '<section id="dialogContent"><form action="' + formSubmission + '" method="post"></form></section>'
         });
 
-//        $.mockjax({
-//            url: formSubmission,
-//            response: function () {
-//                this.status = world.getExpectedResponseStatus();
-//
-//                var responseHeaders = world.getResponseHeaders();
-//                if (responseHeaders) {
-//                    this.headers = responseHeaders;
-//                }
-//
-//                this.responseText = {foo: 'bar'};
-//            }
-//        });
-
         callback();
     });
 
@@ -50,32 +36,21 @@ addStepDefinitions(function (scenario) {
     });
 
     scenario.When(/^the form has been submitted successfully$/, function (callback) {
-        this.setExpectedResponseStatus(200);
-        this.getServer().respondWith([201, this.getResponseHeaders(), '{}']);
+        this.getServer().respondWith('post', formSubmission, [200, {}, '{}']);
 
         $('form').submit();
 
         this.getServer().respond();
-        this.getDeferredFromRequestTo(formSubmission).then(function () {
-            callback();
-        });
+        callback();
     });
 
     scenario.When(/^the form has been submitted with a failure$/, function (callback) {
-        this.setExpectedResponseStatus(500);
-        this.getServer().respondWith([500, {}, "Failure"]);
+        this.getServer().respondWith('post', formSubmission, [500, {}, "Failure"]);
 
         $('form').submit();
 
         this.getServer().respond();
-        this.getDeferredFromRequestTo(formSubmission).then(
-            function () {
-                callback.fail("Shouldn't have gotten a successful response");
-            },
-            function () {
-                callback();
-            }
-        );
+        callback();
     });
 
     scenario.Then(/^the dialog should be closed$/, function (callback) {

@@ -30,6 +30,16 @@ addStepDefinitions(function (scenario) {
         callback();
     });
 
+    scenario.When(/^the add\-entity form has been submitted successfully$/, function(callback) {
+        var $form = $('form');
+        this.getServer().respondWith('post', $form.attr('action'), [201, {Location: addedEntity}, '{}']);
+
+        $form.submit();
+
+        this.getServer().respond();
+        callback();
+    });
+
     scenario.Then(/^the new entity is shown in the list$/, function (callback) {
         this.getDeferredFromRequestTo(addedEntity).then(function () {
             if (entityWasAdded()) {
