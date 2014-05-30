@@ -8,10 +8,7 @@ addStepDefinitions(function (scenario) {
     }
 
     scenario.Before(function (callback) {
-        $.mockjax({
-            url: addedEntity,
-            responseText: {}
-        });
+        this.getServer().respondWith('get', addedEntity, [200, {}, '{}']);
 
         callback();
     });
@@ -41,12 +38,12 @@ addStepDefinitions(function (scenario) {
     });
 
     scenario.Then(/^the new entity is shown in the list$/, function (callback) {
-        this.getDeferredFromRequestTo(addedEntity).then(function () {
-            if (entityWasAdded()) {
-                callback();
-            } else {
-                callback.fail('entity not added');
-            }
-        });
+        this.getServer().respond();
+
+        if (entityWasAdded()) {
+            callback();
+        } else {
+            callback.fail('entity not added');
+        }
     });
 });
