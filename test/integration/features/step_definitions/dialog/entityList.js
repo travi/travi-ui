@@ -27,7 +27,7 @@ addStepDefinitions(function (scenario) {
         callback();
     });
 
-    scenario.When(/^the add\-entity form has been submitted successfully$/, function(callback) {
+    scenario.When(/^the add\-entity form has been submitted successfully$/, function (callback) {
         var $form = $('form');
         this.getServer().respondWith('post', $form.attr('action'), [201, {Location: addedEntity}, '{}']);
 
