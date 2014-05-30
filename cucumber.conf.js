@@ -10,7 +10,6 @@ module.exports = function (config) {
             'test/resources/amplifyProxy.js',
             'bower_components/jquery/jquery.js',
             'bower_components/jquery-ui/ui/jquery-ui.js',
-            'bower_components/jquery-mockjax/jquery.mockjax.js',
             'bower_components/jquery-migrate/jquery-migrate.js',
             'bower_components/wymeditor/dist/wymeditor/jquery.wymeditor.js',
 

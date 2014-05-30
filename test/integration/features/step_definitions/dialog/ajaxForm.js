@@ -13,10 +13,15 @@ addStepDefinitions(function (scenario) {
     scenario.Before(function (callback) {
         this.simulatePageLoad();
 
-        $.mockjax({
-            url: formPage,
-            responseText: '<section id="dialogContent"><form action="' + formSubmission + '" method="post"></form></section>'
-        });
+        this.getServer().respondWith(
+            'get',
+            formPage,
+            [
+                200,
+                {},
+                '<section id="dialogContent"><form action="' + formSubmission + '" method="post"></form></section>'
+            ]
+        );
 
         callback();
     });
@@ -26,13 +31,13 @@ addStepDefinitions(function (scenario) {
 
         $('#dialogLink').click();
 
-        this.getDeferredFromRequestTo(formPage).then(function () {
-            if (dialogIsOpen()) {
-                callback();
-            } else {
-                callback.fail('The dialog did not open.');
-            }
-        });
+        this.getServer().respond();
+
+        if (dialogIsOpen()) {
+            callback();
+        } else {
+            callback.fail('The dialog did not open.');
+        }
     });
 
     scenario.When(/^the form has been submitted successfully$/, function (callback) {

@@ -9,7 +9,6 @@ addStepDefinitions(function (scenario) {
 
     function clearAjax() {
         $.ajax.restore();
-        $.mockjaxClear();
 
         expectedResponseStatus = null;
         responseHeaders = {};
