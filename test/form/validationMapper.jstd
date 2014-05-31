@@ -21,6 +21,7 @@ travi.test.testCase('validation mapper', (function () {
                 $('input[name=' + fieldName + '] + label.ui-state-error[for=' + fieldName + ']').text(),
                 errors[fieldName]
             );
+            assert($('input[name=' + fieldName + ']').hasClass('ui-state-error'));
         }
     };
 }()));
