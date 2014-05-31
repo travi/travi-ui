@@ -3,7 +3,8 @@
 
     var events = travi.events,
         dialog = travi.ui.dialog.simple,
-        dialogEvents = travi.ui.dialog.events;
+        dialogEvents = travi.ui.dialog.events,
+        validationMapper = travi.ui.form.validationMapper;
 
     function handleFormSubmission(e) {
         var $form = $(this);
@@ -24,8 +25,8 @@
                         }
                     });
                 },
-                400: function () {
-                    return;
+                400: function (data) {
+                    validationMapper.showErrors($form.get(0), data.errors);
                 }
             },
             success: function () {

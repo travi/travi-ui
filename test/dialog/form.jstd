@@ -4,6 +4,7 @@ travi.test.testCase('dialog forms', (function () {
     var dialogForm = travi.ui.dialog.form,
         dialogEvents = travi.ui.dialog.events,
         dialog = travi.ui.dialog.simple,
+        validationMapper = travi.ui.form.validationMapper,
 
         testEvents = travi.test.events,
         any = travi.test.any,
@@ -48,7 +49,8 @@ travi.test.testCase('dialog forms', (function () {
         tearDown: function () {
             travi.test.common.restore([
                 $.ajax,
-                dialog.close
+                dialog.close,
+                validationMapper.showErrors
             ]);
             testEvents.restore();
         },
@@ -60,7 +62,7 @@ travi.test.testCase('dialog forms', (function () {
 
             $('form').submit();
 
-            sinon.assert.calledWith($.ajax, sinon.match({
+            assert.calledWith($.ajax, sinon.match({
                 url: formAction,
                 type: formMethod,
                 dataType: 'json',
@@ -77,7 +79,7 @@ travi.test.testCase('dialog forms', (function () {
 
             $('form').submit();
 
-            sinon.assert.calledWith($.ajax, sinon.match({
+            assert.calledWith($.ajax, sinon.match({
                 type: 'get'
             }));
         },
@@ -90,18 +92,26 @@ travi.test.testCase('dialog forms', (function () {
 
             ajaxCallbacks.success();
 
-            sinon.assert.calledOnce(dialog.close);
+            assert.calledOnce(dialog.close);
         },
 
-        'test that dialog is not closed after validation error': function () {
+        'test that dialog is not closed after validation error and errors are shown on the form': function () {
+            var $form = $('form'),
+                validationErrors = {
+                    foo: 'bar'
+                };
+            sinon.stub(validationMapper, 'showErrors');
             testEvents.publish(dialogEvents.keys.LOADED, {
                 dialog: $content.get(0)
             });
-            $('form').submit();
+            $form.submit();
 
-            ajaxCallbacks.badRequest();
+            ajaxCallbacks.badRequest({
+                errors: validationErrors
+            });
 
-            sinon.assert.notCalled(dialog.close);
+            refute.called(dialog.close);
+            assert.calledWith(validationMapper.showErrors, $form.get(0), validationErrors);
         },
 
         'test that details about added entity requested after successful addition': function () {

@@ -1,0 +1,10 @@
+travi.test.testCase('validation mapper', (function () {
+    'use strict';
+
+    return {
+        'test exists': function () {
+            assert.isObject(travi.ui.form.validationMapper);
+            assert.isFunction(travi.ui.form.validationMapper.showErrors);
+        }
+    };
+}()));
