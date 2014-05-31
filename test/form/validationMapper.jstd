@@ -1,10 +1,26 @@
 travi.test.testCase('validation mapper', (function () {
     'use strict';
 
+    var validationMapper = travi.ui.form.validationMapper,
+        any = travi.test.any,
+
+        fieldName = any.string();
+
     return {
-        'test exists': function () {
-            assert.isObject(travi.ui.form.validationMapper);
-            assert.isFunction(travi.ui.form.validationMapper.showErrors);
+        setUp: function () {
+            $('body').append('<form><ol><li><input name="' + fieldName + '"/></li></ol></form>');
+        },
+
+        'test that errors get shown within form': function () {
+            var errors = {};
+            errors[fieldName] = any.string();
+
+            validationMapper.showErrors($('form').get(0), errors);
+
+            assert.equals(
+                $('input[name=' + fieldName + '] + label.ui-state-error[for=' + fieldName + ']').text(),
+                errors[fieldName]
+            );
         }
     };
 }()));

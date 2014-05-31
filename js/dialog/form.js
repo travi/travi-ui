@@ -25,8 +25,8 @@
                         }
                     });
                 },
-                400: function (data) {
-                    validationMapper.showErrors($form.get(0), data.errors);
+                400: function (xhr) {
+                    validationMapper.showErrors($form.get(0), JSON.parse(xhr.responseText).errors);
                 }
             },
             success: function () {

@@ -18,7 +18,7 @@ module.exports = function (config) {
             'bower_components/travi-core/js/travi/dependencies/checker.js',
             'bower_components/travi-core/js/travi/events.js',
 
-            'js/form/richText.js',
+            'js/form/*.js',
 
             'js/dialog/events.js',
             'js/dialog/simple.js',

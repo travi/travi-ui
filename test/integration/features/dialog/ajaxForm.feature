@@ -9,3 +9,9 @@ Feature: Forms in dialogs should be automatically ajaxified
     Given a dialog containing a form has been launched
     When the form has been submitted with a failure
     Then the dialog should still be open
+
+  Scenario: validation errors shown within dialog
+    Given a dialog containing a form has been launched
+    When the form has been submitted with a validation error
+    Then the dialog should still be open
+    Then the validation errors should be shown

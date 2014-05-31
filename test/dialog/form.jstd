@@ -107,7 +107,9 @@ travi.test.testCase('dialog forms', (function () {
             $form.submit();
 
             ajaxCallbacks.badRequest({
-                errors: validationErrors
+                responseText: JSON.stringify({
+                    errors: validationErrors
+                })
             });
 
             refute.called(dialog.close);

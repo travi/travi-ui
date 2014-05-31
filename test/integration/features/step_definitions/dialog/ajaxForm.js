@@ -4,7 +4,8 @@ addStepDefinitions(function (scenario) {
     var any = travi.test.any,
 
         formPage = any.string(),
-        formSubmission = any.string();
+        formSubmission = any.string(),
+        fieldName = any.string();
 
     function dialogIsOpen() {
         return $('#dialogContent').length === 1;
@@ -19,7 +20,7 @@ addStepDefinitions(function (scenario) {
             [
                 200,
                 {},
-                '<section id="dialogContent"><form action="' + formSubmission + '" method="post"></form></section>'
+                '<section id="dialogContent"><form action="' + formSubmission + '" method="post"><ol><li><input name="' + fieldName + '"></li></ol></form></section>'
             ]
         );
 
@@ -58,6 +59,17 @@ addStepDefinitions(function (scenario) {
         callback();
     });
 
+    scenario.When(/^the form has been submitted with a validation error$/, function (callback) {
+        var errors = {};
+        errors[fieldName] = any.string();
+        this.getServer().respondWith('post', formSubmission, [400, {}, JSON.stringify({errors: errors})]);
+
+        $('form').submit();
+
+        this.getServer().respond();
+        callback();
+    });
+
     scenario.Then(/^the dialog should be closed$/, function (callback) {
         if (dialogIsOpen()) {
             callback.fail('The dialog is still open.');
@@ -71,6 +83,14 @@ addStepDefinitions(function (scenario) {
             callback();
         } else {
             callback.fail('The dialog is closed.');
+        }
+    });
+
+    scenario.Then(/^the validation errors should be shown$/, function (callback) {
+        if ($('form label.ui-state-error').length) {
+            callback();
+        } else {
+            callback.fail('error messages not shown');
         }
     });
 
