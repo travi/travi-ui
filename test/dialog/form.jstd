@@ -108,7 +108,9 @@ travi.test.testCase('dialog forms', (function () {
 
             ajaxCallbacks.badRequest({
                 responseText: JSON.stringify({
-                    errors: validationErrors
+                    form: {
+                        errors: validationErrors
+                    }
                 })
             });
 

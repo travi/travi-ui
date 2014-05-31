@@ -62,7 +62,7 @@ addStepDefinitions(function (scenario) {
     scenario.When(/^the form has been submitted with a validation error$/, function (callback) {
         var errors = {};
         errors[fieldName] = any.string();
-        this.getServer().respondWith('post', formSubmission, [400, {}, JSON.stringify({errors: errors})]);
+        this.getServer().respondWith('post', formSubmission, [400, {}, JSON.stringify({form: {errors: errors}})]);
 
         $('form').submit();
 

@@ -6,6 +6,10 @@
         dialogEvents = travi.ui.dialog.events,
         validationMapper = travi.ui.form.validationMapper;
 
+    function getValidationErrorsFrom(xhr) {
+        return JSON.parse(xhr.responseText).form.errors;
+    }
+
     function handleFormSubmission(e) {
         var $form = $(this);
         e.preventDefault();
@@ -26,7 +30,7 @@
                     });
                 },
                 400: function (xhr) {
-                    validationMapper.showErrors($form.get(0), JSON.parse(xhr.responseText).errors);
+                    validationMapper.showErrors($form.get(0), getValidationErrorsFrom(xhr));
                 }
             },
             success: function () {
