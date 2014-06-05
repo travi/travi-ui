@@ -4,11 +4,11 @@ addStepDefinitions(function (scenario) {
     var addedEntity = travi.test.any.string();
 
     function entityWasAdded() {
-        return $('.entityList li').length === 1;
+        return $('.entityList li.entityBlock').length === 1;
     }
 
     scenario.Before(function (callback) {
-        this.getServer().respondWith('get', addedEntity, [200, {}, '{}']);
+        this.getServer().respondWith('get', addedEntity, [200, {}, '<li class="entityBlock"></li>']);
 
         callback();
     });
@@ -20,8 +20,6 @@ addStepDefinitions(function (scenario) {
     });
 
     scenario.Given(/^add button has been clicked$/, function (callback) {
-        this.getServer().respondWith([201, {Location: addedEntity}, '{}']);
-        this.setExpectedResponseStatus(201);
         this.addHeader('Location', addedEntity);
 
         callback();
