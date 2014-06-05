@@ -24,8 +24,8 @@
                 201: function (data, status, xhr) {
                     $.ajax({
                         url: xhr.getResponseHeader('Location'),
-                        success: function () {
-                            $('ol.entityList').append('<li></li>');
+                        success: function (html) {
+                            $('ol.entityList').append(html);
                         }
                     });
                 },

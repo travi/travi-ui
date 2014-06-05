@@ -145,9 +145,9 @@ travi.test.testCase('dialog forms', (function () {
                 }
             });
 
-            addedEntitySuccess();
+            addedEntitySuccess('<li class="entityBlock"></li>');
 
-            assert.equals($('ol.entityList li').length, 1);
+            assert.equals($('ol.entityList li.entityBlock').length, 1);
         }
     };
 }()));
