@@ -4,7 +4,7 @@ travi.test.testCase('entity list updating', (function () {
     var any = travi.test.any,
         testEvents = travi.test.events,
         dialogEvents = travi.ui.dialog.events,
-        entityList = travi.ui.dialog.entityList,
+        updates = travi.ui.entityList.updates,
 
         ajaxSuccess,
         resource = any.string();
@@ -27,7 +27,7 @@ travi.test.testCase('entity list updating', (function () {
         },
 
         'test that the updated data is requested after successful update submission': function () {
-            entityList.init();
+            updates.init();
 
             testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
                 resource: resource

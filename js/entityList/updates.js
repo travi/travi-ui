@@ -1,22 +1,24 @@
 (function (travi) {
     'use strict';
 
+    var dialogEvents = travi.ui.dialog.events;
+
     function init() {
-        travi.ui.dialog.events.form({
-            success: function (data) {
+        dialogEvents.form({
+            success: function (eventData) {
                 $.ajax({
-                    url: data.resource,
+                    url: eventData.resource,
                     type: 'get',
                     dataType: 'html',
                     success: function (html) {
-                        $('#' + data.resource).html(html);
+                        $('#' + eventData.resource).html(html);
                     }
                 });
             }
         });
     }
 
-    travi.register('ui.dialog.entityList', {
+    travi.register('ui.entityList.updates', {
         init: init
     });
 }(travi));

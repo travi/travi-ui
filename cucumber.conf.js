@@ -24,6 +24,8 @@ module.exports = function (config) {
             'js/dialog/simple.js',
             'js/dialog/**/*.js',
 
+            'js/entityList/**/*.js',
+
             {pattern: 'node_modules/karma-cucumberjs/vendor/cucumber-html.css', watched: false, included: false, served: true},
             {pattern: 'test/integration/app.template', watched: false, included: false, served: true},
 
