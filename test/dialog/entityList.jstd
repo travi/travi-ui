@@ -1,0 +1,51 @@
+travi.test.testCase('entity list updating', (function () {
+    'use strict';
+
+    var any = travi.test.any,
+        testEvents = travi.test.events,
+        dialogEvents = travi.ui.dialog.events,
+        entityList = travi.ui.dialog.entityList,
+
+        ajaxSuccess,
+        resource = any.string();
+
+    return {
+        setUp: function () {
+            testEvents.stub();
+            sinon.stub($, 'ajax', function (options) {
+                ajaxSuccess = options.success;
+            });
+
+            $('body').append('<ol class="entityList" id="' + resource + '"><li class="entityBlock">old content</li></ol>');
+        },
+
+        tearDown: function () {
+            travi.test.common.restore([
+                testEvents,
+                $.ajax
+            ]);
+        },
+
+        'test that the updated data is requested after successful update submission': function () {
+            entityList.init();
+
+            testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
+                resource: resource
+            });
+
+            assert.calledWith($.ajax, sinon.match({
+                url: resource,
+                type: 'get',
+                dataType: 'html'
+            }));
+        },
+
+        'test that the entity in the list is updated with data from response': function () {
+            var updatedContent = any.string();
+
+            ajaxSuccess('<li class="entityBlock">' + updatedContent + '</li>');
+
+            assert.equals($('#' + resource).text(), updatedContent);
+        }
+    };
+}()));

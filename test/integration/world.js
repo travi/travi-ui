@@ -2,17 +2,8 @@
 addStepDefinitions(function (scenario) {
     'use strict';
 
-    var expectedResponseStatus,
-        responseHeaders = {},
-        proto = scenario.World.prototype,
+    var proto = scenario.World.prototype,
         server;
-
-    function clearAjax() {
-        $.ajax.restore();
-
-        expectedResponseStatus = null;
-        responseHeaders = {};
-    }
 
     function cleanUpDom() {
         $('body').off();
@@ -29,9 +20,12 @@ addStepDefinitions(function (scenario) {
 
     proto.cleanUp = function cleanUp() {
         cleanUpDom();
-        amplify.restore();
-        clearAjax();
-        server.restore();
+
+        travi.test.common.restore([
+            amplify,
+            server,
+            $.ajax
+        ]);
     };
 
     proto.getServer = function getServer() {
@@ -51,23 +45,5 @@ addStepDefinitions(function (scenario) {
         }
 
         return null;
-    };
-
-    proto.setExpectedResponseStatus = function setExpectedResponseStatus(status) {
-        if (!expectedResponseStatus) {
-            expectedResponseStatus = status;
-        }
-    };
-
-    proto.getExpectedResponseStatus = function getExpectedResponseStatus() {
-        return expectedResponseStatus;
-    };
-
-    proto.addHeader = function addHeader(name, value) {
-        responseHeaders[name] = value;
-    };
-
-    proto.getResponseHeaders = function getResponseHeaders() {
-        return responseHeaders;
     };
 });
