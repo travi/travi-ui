@@ -4,10 +4,10 @@
     var testEvents = travi.events,
 
         keys = {
-        LOADED: 'dialog-loaded',
-        RESIZED: 'dialog-resized',
-        FORM_SUCCESS: 'dialog-form-success'
-    };
+            LOADED: 'dialog-loaded',
+            RESIZED: 'dialog-resized',
+            FORM_SUCCESS: 'dialog-form-success'
+        };
 
     function load(callback) {
         testEvents.subscribe(keys.LOADED, callback);
