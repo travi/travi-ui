@@ -132,7 +132,7 @@
 
     $(init);
 
-    travi.register('ui.entityList', {
+    travi.register('ui.entityList.core', {
         init                    : init,
         setConfirmationMessage  : setMessage,
         setButtonText           : setText,
