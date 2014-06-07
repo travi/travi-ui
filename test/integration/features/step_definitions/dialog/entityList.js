@@ -1,26 +1,29 @@
 addStepDefinitions(function (scenario) {
     'use strict';
 
-    var addedEntity = travi.test.any.string();
+    var any = travi.test.any,
+
+        addedEntity = any.string(),
+        updatedEntity = any.string(),
+        newContent = any.string(),
+
+        entityCount;
 
     function entityWasAdded() {
-        return $('.entityList li.entityBlock').length === 1;
+        return $('.entityList li.entityBlock').length === entityCount + 1;
     }
 
     scenario.Before(function (callback) {
         this.getServer().respondWith('get', addedEntity, [200, {}, '<li class="entityBlock"></li>']);
+        this.getServer().respondWith('get', updatedEntity, [200, {}, '<li class="entityBlock">' + newContent + '</li>']);
 
         callback();
     });
 
     scenario.Given(/^on an entity list page$/, function (callback) {
-        $('#scratch').append('<ol class="entityList"></ol>');
+        $('#scratch').append('<ol class="entityList" id="' + updatedEntity + '"><li class="entityBlock">old content</li></ol>');
 
-        callback();
-    });
-
-    scenario.Given(/^add button has been clicked$/, function (callback) {
-        this.addHeader('Location', addedEntity);
+        entityCount = $('ol.entityList li').length;
 
         callback();
     });
@@ -35,6 +38,19 @@ addStepDefinitions(function (scenario) {
         callback();
     });
 
+    scenario.When(/^the update\-entity form has been submitted successfully$/, function(callback) {
+        var $form = $('form');
+        this.getServer().respondWith('post', $form.attr('action'), [200, {}, JSON.stringify({
+            resource: updatedEntity
+        })]);
+
+        $form.submit();
+
+        this.getServer().respond();
+
+        callback();
+    });
+
     scenario.Then(/^the new entity is shown in the list$/, function (callback) {
         this.getServer().respond();
 
@@ -43,5 +59,24 @@ addStepDefinitions(function (scenario) {
         } else {
             callback.fail('entity not added');
         }
+    });
+
+    scenario.Then(/^the existing entity is updated in the list$/, function(callback) {
+        this.getServer().respond();
+
+        var text = $('#' + updatedEntity).text();
+        if (text === newContent) {
+            callback()
+        } else {
+            callback.fail('expected updated entity\'s content to be ' + newContent + ' but was ' + text);
+        }
+
+        callback();
+    });
+
+    scenario.After(function (callback) {
+        entityCount = null;
+
+        callback();
     });
 });
