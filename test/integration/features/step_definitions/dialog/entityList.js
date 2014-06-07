@@ -38,7 +38,7 @@ addStepDefinitions(function (scenario) {
         callback();
     });
 
-    scenario.When(/^the update\-entity form has been submitted successfully$/, function(callback) {
+    scenario.When(/^the update\-entity form has been submitted successfully$/, function (callback) {
         var $form = $('form');
         this.getServer().respondWith('post', $form.attr('action'), [200, {}, JSON.stringify({
             resource: updatedEntity
@@ -61,12 +61,12 @@ addStepDefinitions(function (scenario) {
         }
     });
 
-    scenario.Then(/^the existing entity is updated in the list$/, function(callback) {
+    scenario.Then(/^the existing entity is updated in the list$/, function (callback) {
         this.getServer().respond();
 
         var text = $('#' + updatedEntity).text();
         if (text === newContent) {
-            callback()
+            callback();
         } else {
             callback.fail('expected updated entity\'s content to be ' + newContent + ' but was ' + text);
         }
