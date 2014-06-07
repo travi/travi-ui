@@ -33,8 +33,12 @@
                     validationMapper.showErrors($form.get(0), getValidationErrorsFrom(xhr));
                 }
             },
-            success: function () {
+            success: function (data) {
                 dialog.close();
+
+                events.publish(dialogEvents.keys.FORM_SUCCESS, {
+                    resource: data.resource
+                });
             }
         });
         /*jslint unparam: false */

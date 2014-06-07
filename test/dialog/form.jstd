@@ -2,6 +2,7 @@ travi.test.testCase('dialog forms', (function () {
     'use strict';
 
     var dialogForm = travi.ui.dialog.form,
+        events = travi.events,
         dialogEvents = travi.ui.dialog.events,
         dialog = travi.ui.dialog.simple,
         validationMapper = travi.ui.form.validationMapper,
@@ -49,6 +50,7 @@ travi.test.testCase('dialog forms', (function () {
         tearDown: function () {
             travi.test.common.restore([
                 $.ajax,
+                events.publish,
                 dialog.close,
                 validationMapper.showErrors
             ]);
@@ -84,15 +86,23 @@ travi.test.testCase('dialog forms', (function () {
             }));
         },
 
-        'test that dialog is closed after successful form submission': function () {
+        'test that dialog is closed after successful form submission and event is published': function () {
+            var resource = any.string();
+            sinon.stub(events, 'publish');
             testEvents.publish(dialogEvents.keys.LOADED, {
                 dialog: $content.get(0)
             });
             $('form').submit();
 
-            ajaxCallbacks.success();
+            ajaxCallbacks.success({
+                resource: resource,
+                foo: 'bar'
+            });
 
             assert.calledOnce(dialog.close);
+            assert.calledWith(events.publish, dialogEvents.keys.FORM_SUCCESS, {
+                resource: resource
+            });
         },
 
         'test that dialog is not closed after validation error and errors are shown on the form': function () {
