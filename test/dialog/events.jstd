@@ -1,26 +1,43 @@
 travi.test.testCase('dialog events', (function () {
     'use strict';
 
-    var dialogEvents = travi.ui.dialog.events;
+    var testEvents = travi.test.events,
+        dialogEvents = travi.ui.dialog.events;
 
     return {
+        setUp: function () {
+            testEvents.stub();
+        },
+
         tearDown: function () {
-            travi.test.events.restore();
+            testEvents.restore();
         },
 
         'test events are defined properly': function () {
             assert.equals('dialog-loaded', dialogEvents.keys.LOADED);
-            assert.equals('resized', dialogEvents.keys.RESIZED);
+            assert.equals('dialog-resized', dialogEvents.keys.RESIZED);
+
+            assert.equals('dialog-form-success', dialogEvents.keys.FORM_SUCCESS);
         },
 
         'test registering to load event': function () {
-            travi.test.events.stub();
             var callback = sinon.spy();
             dialogEvents.load(callback);
 
-            travi.test.events.publish(dialogEvents.keys.LOADED);
+            testEvents.publish(dialogEvents.keys.LOADED);
 
             assert.calledOnce(callback);
+        },
+
+        'test registering to the form success event': function () {
+            var successCallback = sinon.spy();
+            dialogEvents.form({
+                success: successCallback
+            });
+
+            testEvents.publish(dialogEvents.keys.FORM_SUCCESS);
+
+            assert.calledOnce(successCallback);
         }
     };
 }()));

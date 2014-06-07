@@ -1,17 +1,25 @@
 (function (travi) {
     'use strict';
 
-    var keys = {
+    var testEvents = travi.events,
+
+        keys = {
         LOADED: 'dialog-loaded',
-        RESIZED: 'resized'
+        RESIZED: 'dialog-resized',
+        FORM_SUCCESS: 'dialog-form-success'
     };
 
     function load(callback) {
-        travi.events.subscribe(keys.LOADED, callback);
+        testEvents.subscribe(keys.LOADED, callback);
+    }
+
+    function form(callbacks) {
+        testEvents.subscribe(keys.FORM_SUCCESS, callbacks.success);
     }
 
     travi.register('ui.dialog.events', {
         keys: keys,
-        load: load
+        load: load,
+        form: form
     });
 }(travi));
