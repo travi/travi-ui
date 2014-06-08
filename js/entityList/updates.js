@@ -6,7 +6,6 @@
     function init() {
         dialogEvents.form({
             success: function (eventData) {
-                console.log(formatio.ascii(eventData));
                 $.ajax({
                     url: eventData.resource,
                     type: 'get',
