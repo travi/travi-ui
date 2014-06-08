@@ -15,13 +15,13 @@ addStepDefinitions(function (scenario) {
 
     scenario.Before(function (callback) {
         this.getServer().respondWith('get', addedEntity, [200, {}, '<li class="entityBlock"></li>']);
-        this.getServer().respondWith('get', updatedEntity, [200, {}, '<li class="entityBlock">' + newContent + '</li>']);
+        this.getServer().respondWith('get', updatedEntity, [200, {}, '<li class="entityBlock" travi-self="' + updatedEntity + '">' + newContent + '</li>']);
 
         callback();
     });
 
     scenario.Given(/^on an entity list page$/, function (callback) {
-        $('#scratch').append('<ol class="entityList" id="' + updatedEntity + '"><li class="entityBlock">old content</li></ol>');
+        $('#scratch').append('<ol class="entityList"><li class="entityBlock" travi-self="' + updatedEntity + '">old content</li></ol>');
 
         entityCount = $('ol.entityList li').length;
 
@@ -64,7 +64,7 @@ addStepDefinitions(function (scenario) {
     scenario.Then(/^the existing entity is updated in the list$/, function (callback) {
         this.getServer().respond();
 
-        var text = $('#' + updatedEntity).text();
+        var text = $('li.entityBlock[travi-self="' + updatedEntity + '"]').text();
         if (text === newContent) {
             callback();
         } else {

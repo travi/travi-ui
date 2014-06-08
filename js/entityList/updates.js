@@ -6,12 +6,13 @@
     function init() {
         dialogEvents.form({
             success: function (eventData) {
+                console.log(formatio.ascii(eventData));
                 $.ajax({
                     url: eventData.resource,
                     type: 'get',
                     dataType: 'html',
                     success: function (html) {
-                        $('#' + eventData.resource).html(html);
+                        $('li.entityBlock[travi-self="' + eventData.resource + '"]').replaceWith(html);
                     }
                 });
             }
