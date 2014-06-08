@@ -16,9 +16,7 @@ travi.test.testCase('dialog forms', (function () {
         formMethod = any.string(),
         fieldName = any.string(),
         fieldValue = any.string(),
-        $content = $('<section><form method="' + formMethod + '" action="' + formAction + '"><input name="' + fieldName + '" value="' + fieldValue + '"></input></form></section>'),
-        addedEntityUrl = any.string(),
-        addedEntitySuccess;
+        $content = $('<section><form method="' + formMethod + '" action="' + formAction + '"><input name="' + fieldName + '" value="' + fieldValue + '"></input></form></section>');
 
     function launchDialogAndSubmitForm() {
         testEvents.publish(dialogEvents.keys.LOADED, {
@@ -29,34 +27,6 @@ travi.test.testCase('dialog forms', (function () {
     }
 
     return {
-        setUp: function () {
-            $('body').append($content);
-
-            testEvents.stub();
-            sinon.stub($, 'ajax', function (options) {
-                if (options.url === formAction) {
-                    ajaxCallbacks.success = options.success;
-                    ajaxCallbacks.badRequest = options.statusCode[400];
-                    ajaxCallbacks.added = options.statusCode[201];
-                } else if (options.url === addedEntityUrl) {
-                    addedEntitySuccess = options.success;
-                }
-            });
-            sinon.stub(dialog, 'close');
-
-            dialogForm.init();
-        },
-
-        tearDown: function () {
-            travi.test.common.restore([
-                $.ajax,
-                events.publish,
-                dialog.close,
-                validationMapper.showErrors
-            ]);
-            testEvents.restore();
-        },
-
         'test submitting form from dialog content triggers ajax request': function () {
             testEvents.publish(dialogEvents.keys.LOADED, {
                 dialog: $content.get(0)
@@ -88,7 +58,6 @@ travi.test.testCase('dialog forms', (function () {
 
         'test that dialog is closed after successful form submission and event is published': function () {
             var resource = any.string();
-            sinon.stub(events, 'publish');
             testEvents.publish(dialogEvents.keys.LOADED, {
                 dialog: $content.get(0)
             });
@@ -128,36 +97,49 @@ travi.test.testCase('dialog forms', (function () {
             assert.calledWith(validationMapper.showErrors, $form.get(0), validationErrors);
         },
 
-        'test that details about added entity requested after successful addition': function () {
-            var xhr = {
-                getResponseHeader: function () {
-                    return addedEntityUrl;
-                }
-            };
-            sinon.spy(xhr, 'getResponseHeader');
+        'test that event published after successful addition': function () {
+            var addedEntityUrl = any.string(),
+                xhr = {
+                    getResponseHeader: function (headerName) {
+                        if ('Location' === headerName) {
+                            return addedEntityUrl;
+                        }
+                    }
+                };
             launchDialogAndSubmitForm();
 
             ajaxCallbacks.added(null, null, xhr);
 
-            assert.calledWith(xhr.getResponseHeader, 'Location');
-            assert.calledWith($.ajax, sinon.match({
-                url: addedEntityUrl
-            }));
+            assert.calledWith(events.publish, dialogEvents.keys.FORM_RESULT_CREATED, {
+                resource: addedEntityUrl
+            });
         },
 
-        'test that item added to entity list as result of 201': function () {
-            $('body').append('<ol class="entityList"></ol>');
-            launchDialogAndSubmitForm();
+        setUp: function () {
+            $('body').append($content);
 
-            ajaxCallbacks.added(null, null, {
-                getResponseHeader: function () {
-                    return addedEntityUrl;
+            testEvents.stub();
+            sinon.stub(events, 'publish');
+            sinon.stub($, 'ajax', function (options) {
+                if (options.url === formAction) {
+                    ajaxCallbacks.success = options.success;
+                    ajaxCallbacks.badRequest = options.statusCode[400];
+                    ajaxCallbacks.added = options.statusCode[201];
                 }
             });
+            sinon.stub(dialog, 'close');
 
-            addedEntitySuccess('<li class="entityBlock"></li>');
+            dialogForm.init();
+        },
 
-            assert.equals($('ol.entityList li.entityBlock').length, 1);
+        tearDown: function () {
+            travi.test.common.restore([
+                $.ajax,
+                events.publish,
+                dialog.close,
+                validationMapper.showErrors
+            ]);
+            testEvents.restore();
         }
     };
 }()));

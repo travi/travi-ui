@@ -5,19 +5,12 @@ travi.test.testCase('dialog events', (function () {
         dialogEvents = travi.ui.dialog.events;
 
     return {
-        setUp: function () {
-            testEvents.stub();
-        },
-
-        tearDown: function () {
-            testEvents.restore();
-        },
-
         'test events are defined properly': function () {
             assert.equals('dialog-loaded', dialogEvents.keys.LOADED);
             assert.equals('dialog-resized', dialogEvents.keys.RESIZED);
 
             assert.equals('dialog-form-success', dialogEvents.keys.FORM_SUCCESS);
+            assert.equals('dialog-form-result-created', dialogEvents.keys.FORM_RESULT_CREATED);
         },
 
         'test registering to load event': function () {
@@ -38,6 +31,29 @@ travi.test.testCase('dialog events', (function () {
             testEvents.publish(dialogEvents.keys.FORM_SUCCESS);
 
             assert.calledOnce(successCallback);
+        },
+
+        'test registering to the created event': function () {
+            var createdCallback = sinon.spy();
+            dialogEvents.form({
+                created: createdCallback
+            });
+
+            testEvents.publish(dialogEvents.keys.FORM_RESULT_CREATED);
+
+            assert.calledOnce(createdCallback);
+        },
+
+        'test that missing callbacks for any of the form events dont cause issues': function () {
+            dialogEvents.form({});
+        },
+
+        setUp: function () {
+            testEvents.stub();
+        },
+
+        tearDown: function () {
+            testEvents.restore();
         }
     };
 }()));

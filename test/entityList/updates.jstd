@@ -6,33 +6,42 @@ travi.test.testCase('entity list updating', (function () {
         dialogEvents = travi.ui.dialog.events,
         updates = travi.ui.entityList.updates,
 
-        ajaxSuccess,
-        resource = any.string();
+        ajaxCallbacks,
+        resource = any.string(),
+        entityCount;
 
     return {
-        setUp: function () {
-            testEvents.stub();
-            sinon.stub($, 'ajax', function (options) {
-                ajaxSuccess = options.success;
-            });
-
-            $('body').append('<ol class="entityList"><li class="entityBlock" travi-self="' + resource + '">old content</li></ol>');
-
-            updates.init();
-
-            testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
+        'test that the new entity is requested after a successful addition': function () {
+            testEvents.publish(dialogEvents.keys.FORM_RESULT_CREATED, {
                 resource: resource
             });
+
+            assert.calledWith($.ajax, sinon.match({
+                url: resource,
+                type: 'get',
+                dataType: 'html'
+            }));
         },
 
-        tearDown: function () {
-            travi.test.common.restore([
-                testEvents,
-                $.ajax
-            ]);
+        'test that the added entity is inserted into the list from the response': function () {
+            var $entities,
+                addedContent = any.string();
+            testEvents.publish(dialogEvents.keys.FORM_RESULT_CREATED, {
+                resource: resource
+            });
+
+            ajaxCallbacks.success('<li class="entityBlock">' + addedContent + '</li>');
+
+            $entities = $('.entityList li.entityBlock');
+            assert.equals($entities.length, entityCount + 1);
+            assert.equals($entities.last().text(), addedContent);
         },
 
         'test that the updated data is requested after successful update submission': function () {
+            testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
+                resource: resource
+            });
+
             assert.calledWith($.ajax, sinon.match({
                 url: resource,
                 type: 'get',
@@ -42,10 +51,34 @@ travi.test.testCase('entity list updating', (function () {
 
         'test that the entity in the list is updated with data from response': function () {
             var updatedContent = any.string();
+            testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
+                resource: resource
+            });
 
-            ajaxSuccess('<li class="entityBlock" travi-self="' + resource + '">' + updatedContent + '</li>');
+            ajaxCallbacks.success('<li class="entityBlock" travi-self="' + resource + '">' + updatedContent + '</li>');
 
             assert.equals($('li.entityBlock[travi-self="' + resource + '"]').text(), updatedContent);
+        },
+
+        setUp: function () {
+            ajaxCallbacks = {};
+
+            testEvents.stub();
+            sinon.stub($, 'ajax', function (options) {
+                ajaxCallbacks.success = options.success;
+            });
+
+            $('body').append('<ol class="entityList"><li class="entityBlock" travi-self="' + resource + '">old content</li></ol>');
+            entityCount = $('.entityList li').length;
+
+            updates.init();
+        },
+
+        tearDown: function () {
+            travi.test.common.restore([
+                testEvents,
+                $.ajax
+            ]);
         }
     };
 }()));

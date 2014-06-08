@@ -6,7 +6,8 @@
         keys = {
             LOADED: 'dialog-loaded',
             RESIZED: 'dialog-resized',
-            FORM_SUCCESS: 'dialog-form-success'
+            FORM_SUCCESS: 'dialog-form-success',
+            FORM_RESULT_CREATED: 'dialog-form-result-created'
         };
 
     function load(callback) {
@@ -14,7 +15,13 @@
     }
 
     function form(callbacks) {
-        testEvents.subscribe(keys.FORM_SUCCESS, callbacks.success);
+        if (callbacks.success) {
+            testEvents.subscribe(keys.FORM_SUCCESS, callbacks.success);
+        }
+
+        if (callbacks.created) {
+            testEvents.subscribe(keys.FORM_RESULT_CREATED, callbacks.created);
+        }
     }
 
     travi.register('ui.dialog.events', {

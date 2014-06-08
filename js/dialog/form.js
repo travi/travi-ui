@@ -22,11 +22,8 @@
             data: $form.serialize(),
             statusCode: {
                 201: function (data, status, xhr) {
-                    $.ajax({
-                        url: xhr.getResponseHeader('Location'),
-                        success: function (html) {
-                            $('ol.entityList').append(html);
-                        }
+                    events.publish(dialogEvents.keys.FORM_RESULT_CREATED, {
+                        resource: xhr.getResponseHeader('Location')
                     });
                 },
                 400: function (xhr) {
