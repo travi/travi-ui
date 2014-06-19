@@ -52,7 +52,7 @@
 
     $(init);
 
-    travi.register('ui.entityList.core', {
+    travi.register('ui.entityList.pagination', {
         init                    : init,
         constants               : constants,
         requestMoreAnnouncements: requestAnnouncements
