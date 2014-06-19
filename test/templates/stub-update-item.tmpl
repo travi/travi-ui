@@ -2,11 +2,7 @@
 <li class="entityBlock {{>type}}">
     <ul class="actions">
         {{for ~actions}}
-        <li class="{{>~toLower(text)}}-item">
-            <form action="#" method="post">
-                <label for="text">text</label><input id="text" name="someName" type="text"/>
-            </form>
-        </li>
+        <li class="{{>~toLower(text)}}-item"></li>
         {{/for}}
     </ul>
 </li>

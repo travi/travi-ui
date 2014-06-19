@@ -8,74 +8,8 @@
         events = travi.events,
 
         TEMPLATE_NAME = 'update-item',
-        buttonText,
 
         $updateList;
-
-    function setMessage(confirmation) {
-        $("#confirmation").text(confirmation);
-    }
-
-    function setText(text) {
-        buttonText = text;
-    }
-
-    function getText() {
-        return buttonText;
-    }
-
-    function showLoadingIndicator(data, $form) {
-        $form.closest('li').append(
-            '<img src="/resources/thirdparty/travi-styles/img/progress/ajax-spinner.gif" class="loading-indicator"/>'
-        );
-    }
-
-    function removeEntity(data, testStatus, xhr, $form) {
-        var $containingList = $form.closest('ol');
-
-        $form
-            .closest('li')
-            .parent()
-            .closest('li')
-            .slideUp('slow', function () {
-                $(this).remove();
-                $containingList.trigger('entityRemoved');
-            });
-    }
-
-    function confirm(event) {
-        var $form = $(event.target),
-            $confirmation = $("#confirmation");
-
-        $confirmation.dialog("option", "buttons", [
-            {
-                text:   getText(),
-                click:  function () {
-                    $(this).dialog("close");
-                    $form.ajaxSubmit({
-                        beforeSubmit: showLoadingIndicator,
-                        success: removeEntity,
-                        dataType: 'json'
-                    });
-                }
-            },
-            {
-                text:   "Cancel",
-                click:  function () {
-                    $(this).dialog("close");
-                }
-            }
-        ]);
-        $confirmation.dialog("open");
-
-        event.preventDefault();
-    }
-
-    function restyleRemove() {
-        $("li.remove-item form:visible")
-            .hide()
-            .after("<a class='item-action icon-remove' href='#'>Remove</a>");
-    }
 
     function requestAnnouncements(eventData) {
         $.getJSON(eventData.url, function (data) {
@@ -96,8 +30,6 @@
                         limit = parseInt(announcementsContainer.limit, 10),
                         total = parseInt(announcementsContainer.totalEntities, 10);
 
-                    restyleRemove();
-
                     events.publish(constants.get('PAGE_EVENT'), {
                         offset: offset,
                         nextOffset: offset + limit,
@@ -112,18 +44,6 @@
     function init() {
         $updateList = $('ol.entityList');
 
-        restyleRemove();
-        $updateList.delegate('li.remove-item a.item-action', 'click', function (event) {
-            event.preventDefault();
-            $(this).prev("form").submit();
-        }).delegate("form.item-action", 'submit', confirm);
-        $("body").append("<div id='confirmation' title='Are you sure?'></div>");
-        $("#confirmation").dialog({
-            autoOpen:   false,
-            modal:      true,
-            resizable:  false,
-            dialogClass: 'confirmation'
-        });
         $('a.add-item').button({icons: {primary: 'ui-action-circle-plus'}});
 
         events.subscribe(pagination.events.NEXT_PAGE_REQUESTED, requestAnnouncements);
@@ -134,9 +54,6 @@
 
     travi.register('ui.entityList.core', {
         init                    : init,
-        setConfirmationMessage  : setMessage,
-        setButtonText           : setText,
-        getButtonText           : getText,
         constants               : constants,
         requestMoreAnnouncements: requestAnnouncements
     });
