@@ -12,11 +12,12 @@ travi.test.testCase('dialog forms', (function () {
 
         ajaxCallbacks = {},
 
+        formKey = any.string(),
         formAction = any.string(),
         formMethod = any.string(),
         fieldName = any.string(),
         fieldValue = any.string(),
-        $content = $('<section><form method="' + formMethod + '" action="' + formAction + '"><input name="' + fieldName + '" value="' + fieldValue + '"></input></form></section>');
+        $content = $('<section><form method="' + formMethod + '" action="' + formAction + '" travi-form-key="' + formKey + '"><input name="' + fieldName + '" value="' + fieldValue + '"></input></form></section>');
 
     function launchDialogAndSubmitForm() {
         testEvents.publish(dialogEvents.keys.LOADED, {
@@ -70,7 +71,8 @@ travi.test.testCase('dialog forms', (function () {
 
             assert.calledOnce(dialog.close);
             assert.calledWith(events.publish, dialogEvents.keys.FORM_SUCCESS, {
-                resource: resource
+                resource: resource,
+                key: formKey
             });
         },
 

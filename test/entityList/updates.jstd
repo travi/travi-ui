@@ -60,6 +60,18 @@ travi.test.testCase('entity list updating', (function () {
             assert.equals($('li.entityBlock[travi-self="' + resource + '"]').text(), updatedContent);
         },
 
+        'test that the entity is removed from the list after a successful DELETE': function () {
+            var $entities;
+
+            testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
+                resource: resource,
+                key: 'remove-resource'
+            });
+
+            $entities = $('.entityList li.entityBlock');
+            assert.equals($entities.length, entityCount - 1);
+        },
+
         setUp: function () {
             ajaxCallbacks = {};
 

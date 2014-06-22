@@ -34,7 +34,8 @@
                 dialog.close();
 
                 events.publish(dialogEvents.keys.FORM_SUCCESS, {
-                    resource: data.resource
+                    resource: data.resource,
+                    key: $form.attr('travi-form-key')
                 });
             }
         });

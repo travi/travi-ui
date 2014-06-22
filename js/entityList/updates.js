@@ -12,17 +12,33 @@
         });
     }
 
+    function addResourceToList(resource) {
+        requestResourceAndThen(resource, function (html) {
+            $('ol.entityList').append(html);
+        });
+    }
+
+    function removeResourceFromList(resource) {
+        $('li.entityBlock[travi-self="' + resource + '"]').remove();
+    }
+
+    function updateResourceInList(resource) {
+        requestResourceAndThen(resource, function (html) {
+            $('li.entityBlock[travi-self="' + resource + '"]').replaceWith(html);
+        });
+    }
+
     function init() {
         dialogEvents.form({
             created: function (eventData) {
-                requestResourceAndThen(eventData.resource, function (html) {
-                    $('ol.entityList').append(html);
-                });
+                addResourceToList(eventData.resource);
             },
             success: function (eventData) {
-                requestResourceAndThen(eventData.resource, function (html) {
-                    $('li.entityBlock[travi-self="' + eventData.resource + '"]').replaceWith(html);
-                });
+                if ('remove-resource' === eventData.key) {
+                    removeResourceFromList(eventData.resource);
+                } else {
+                    updateResourceInList(eventData.resource);
+                }
             }
         });
     }
