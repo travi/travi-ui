@@ -1,0 +1,15 @@
+travi.test.testCase('form button enhancement', (function () {
+    'use strict';
+
+    var buttons = travi.ui.form.buttons;
+
+    return {
+        'test that button enhancement applied on page load': function () {
+            $('body').append('<input type="submit"/>');
+
+            buttons.init();
+
+            assert($('input[type=submit]').hasClass('ui-button'));
+        }
+    };
+}()));
