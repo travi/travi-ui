@@ -10,6 +10,7 @@ module.exports = function (config) {
             'bower_components/travi-test-utils/proxies/amplifyProxy.js',
             'bower_components/jquery/jquery.js',
             'bower_components/jquery-ui/ui/jquery-ui.js',
+            'bower_components/jsrender/jsrender.js',
             'bower_components/jquery-migrate/jquery-migrate.js',
             'bower_components/wymeditor/dist/wymeditor/jquery.wymeditor.js',
 
@@ -17,6 +18,10 @@ module.exports = function (config) {
             'bower_components/travi-test-utils/proxies/registerProxy.js',
             'bower_components/travi-core/js/travi/dependencies/checker.js',
             'bower_components/travi-core/js/travi/events.js',
+            'bower_components/travi-core/js/travi/templates.js',
+
+            {pattern: 'test/templates/**/*.tmpl', included: false},
+            'test/resources/load-templates-integration.js',
 
             'js/form/*.js',
 
