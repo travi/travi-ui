@@ -1,0 +1,36 @@
+travi.test.testCase('button enhancement in dialog', (function () {
+    'use strict';
+
+    var dialogEvents = travi.ui.dialog.events,
+        dialogButtons = travi.ui.dialog.buttons,
+
+        dialogLoadedCallback;
+
+    function simulateDialogLoad() {
+        $('body').append('<input type="submit"/>');
+
+        dialogLoadedCallback();
+    }
+
+    return {
+        'test that button is enhanced once dialog loads': function () {
+            dialogButtons.init();
+
+            simulateDialogLoad();
+
+            assert($('input[type=submit]').hasClass('ui-button'));
+        },
+
+        setUp: function () {
+            sinon.stub(dialogEvents, 'load', function (callback) {
+                dialogLoadedCallback = callback;
+            });
+        },
+
+        tearDown: function () {
+            travi.test.common.restore([
+                dialogEvents.load
+            ]);
+        }
+    };
+}()));
