@@ -2,7 +2,7 @@
     'use strict';
 
     function init() {
-        $('input[type=submit]').addClass('ui-button');
+        $('input[type=submit]').button();
     }
 
     travi.register('ui.form.buttons', {
