@@ -4,7 +4,7 @@
   "dependencies": {
     "jquery-ui": "1.10.x",
     "travi-core": "0.8.0",
-    "wymeditor": "latest",
+    "wymeditor": "v1.0.0b6",
     "jquery-migrate": "1.2.1"
   },
   "devDependencies": {
