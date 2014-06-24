@@ -10,7 +10,7 @@ travi.test.testCase('dialog api tests', (function () {
         insertedId = 'fromAjax',
         insertedContent = 'some content';
 
-    function dialogClosedProperly() {
+    function assertDialogClosedProperly() {
         assert.equals(0, $('#' + insertedId).length);
     }
 
@@ -62,7 +62,18 @@ travi.test.testCase('dialog api tests', (function () {
 
             $('#' + insertedId).dialog('close');
 
-            dialogClosedProperly();
+            assertDialogClosedProperly();
+        },
+
+        'test that clicking cancel link from inserted content closes dialog': function () {
+            var click = new $.Event('click');
+            dialog.loadFromUrl({});
+            successHandler('<form id="' + insertedId + '"><ol class="actions"><li><a href="#" class="cancel">Cancel</a></li></ol></form>');
+
+            $('.ui-dialog a.cancel').trigger(click);
+
+            assert(click.isDefaultPrevented());
+            assertDialogClosedProperly();
         },
 
         'test that event published upon successful load': function () {
@@ -80,7 +91,7 @@ travi.test.testCase('dialog api tests', (function () {
 
             dialog.close();
 
-            dialogClosedProperly();
+            assertDialogClosedProperly();
         },
 
         'test that closing programmatically when no dialog is open does not throw error': function () {

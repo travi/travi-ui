@@ -33,6 +33,11 @@
                 $dialog = null;
             }
         });
+        $dialog.on('click', '.actions a.cancel', function (event) {
+            event.preventDefault();
+
+            close();
+        });
     }
 
     function loadFromUrl(options) {
