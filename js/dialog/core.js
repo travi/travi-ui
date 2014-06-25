@@ -57,7 +57,7 @@
         });
     }
 
-    travi.register('ui.dialog.simple', {
+    travi.register('ui.dialog.core', {
         loadFromUrl: loadFromUrl,
         recenter: recenter,
         close: close

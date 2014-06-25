@@ -26,7 +26,7 @@ module.exports = function (config) {
             'js/form/*.js',
 
             'js/dialog/events.js',
-            'js/dialog/simple.js',
+            'js/dialog/core.js',
             'js/dialog/**/*.js',
 
             'js/entityList/updates.js',

@@ -1,7 +1,7 @@
 travi.test.testCase('dialog api tests', (function () {
     'use strict';
 
-    var dialog = travi.ui.dialog.simple,
+    var dialog = travi.ui.dialog.core,
         any = travi.test.any,
         dialogEvents = travi.ui.dialog.events,
 

@@ -2,7 +2,7 @@
     'use strict';
 
     var events = travi.events,
-        dialog = travi.ui.dialog.simple,
+        dialog = travi.ui.dialog.core,
         dialogEvents = travi.ui.dialog.events,
         validationMapper = travi.ui.form.validationMapper;
 

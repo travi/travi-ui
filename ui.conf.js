@@ -27,7 +27,7 @@ module.exports = function (config) {
             'bower_components/travi-test-utils/test-init.js',
             'js/form/*.js',
             'js/dialog/events.js',
-            'js/dialog/simple.js',
+            'js/dialog/core.js',
             'js/**/*.js',
 
             'bower_components/travi-test-utils/stubs/ajaxStub.js',

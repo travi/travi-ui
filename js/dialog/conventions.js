@@ -2,13 +2,13 @@
     'use strict';
 
     var events = travi.events,
-        dialog = travi.ui.dialog.simple;
+        dialog = travi.ui.dialog.core;
 
     function enhanceLinkIntoDialog(e) {
         var $link = $(e.target).closest('a');
         e.preventDefault();
 
-        travi.ui.dialog.simple.loadFromUrl({
+        dialog.loadFromUrl({
             url: $link.attr('href'),
             title: $link.text()
         });

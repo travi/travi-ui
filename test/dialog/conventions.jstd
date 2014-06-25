@@ -3,7 +3,7 @@ travi.test.testCase('dialog conventions', (function () {
 
     var any = travi.test.any,
         conventions = travi.ui.dialog.conventions,
-        dialog = travi.ui.dialog.simple,
+        dialog = travi.ui.dialog.core,
         dialogEvents = travi.ui.dialog.events,
 
         url = any.string(),
