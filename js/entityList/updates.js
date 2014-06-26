@@ -36,7 +36,7 @@
             success: function (eventData) {
                 if ('remove-resource' === eventData.key) {
                     removeResourceFromList(eventData.resource);
-                } else {
+                } else if ('edit-resource' === eventData.key ) {
                     updateResourceInList(eventData.resource);
                 }
             }

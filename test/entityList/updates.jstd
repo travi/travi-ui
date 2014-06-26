@@ -39,6 +39,7 @@ travi.test.testCase('entity list updating', (function () {
 
         'test that the updated data is requested after successful update submission': function () {
             testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
+                key: 'edit-resource',
                 resource: resource
             });
 
@@ -49,9 +50,19 @@ travi.test.testCase('entity list updating', (function () {
             }));
         },
 
+        'test that request for updated details not requested when not an update action': function () {
+            testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
+                key: any.string(),
+                resource: resource
+            });
+
+            refute.called($.ajax);
+        },
+
         'test that the entity in the list is updated with data from response': function () {
             var updatedContent = any.string();
             testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
+                key: 'edit-resource',
                 resource: resource
             });
 
