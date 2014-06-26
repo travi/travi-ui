@@ -28,15 +28,23 @@
         });
     }
 
+    function wasRemove(key) {
+        return 'remove-resource' === key;
+    }
+
+    function wasEdit(key) {
+        return 'edit-resource' === key;
+    }
+
     function init() {
         dialogEvents.form({
             created: function (eventData) {
                 addResourceToList(eventData.resource);
             },
             success: function (eventData) {
-                if ('remove-resource' === eventData.key) {
+                if (wasRemove(eventData.key)) {
                     removeResourceFromList(eventData.resource);
-                } else if ('edit-resource' === eventData.key) {
+                } else if (wasEdit(eventData.key)) {
                     updateResourceInList(eventData.resource);
                 }
             }

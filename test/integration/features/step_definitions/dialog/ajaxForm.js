@@ -14,21 +14,21 @@ addStepDefinitions(function (scenario) {
     scenario.Before(function (callback) {
         this.simulatePageLoad();
 
+        callback();
+    });
+
+    scenario.Given(/^a dialog containing a form with key "([^"]*)" has been launched$/, function (key, callback) {
+        $('#scratch').append('<a href="' + formPage + '" class="dialog-target" id="dialogLink"></a>');
+
         this.getServer().respondWith(
             'get',
             formPage,
             [
                 200,
                 {},
-                '<section id="dialogContent"><form action="' + formSubmission + '" method="post"><ol><li><input name="' + fieldName + '"></li></ol></form></section>'
+                '<section id="dialogContent"><form action="' + formSubmission + '" method="post" travi-form-key="' + key + '"><ol><li><input name="' + fieldName + '"></li></ol></form></section>'
             ]
         );
-
-        callback();
-    });
-
-    scenario.Given(/^a dialog containing a form has been launched$/, function (callback) {
-        $('#scratch').append('<a href="' + formPage + '" class="dialog-target" id="dialogLink"></a>');
 
         $('#dialogLink').click();
 
