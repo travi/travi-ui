@@ -10,7 +10,7 @@ module.exports = function (config) {
             'bower_components/travi-test-utils/tools/assert-fix.js',
 
             'bower_components/jquery/jquery.js',
-            'bower_components/jquery-ui/jquery-ui.js',
+            'bower_components/jquery-ui/ui/jquery-ui.js',
             'bower_components/jsrender/jsrender.js',
             'bower_components/jquery-form/jquery.form.js',
             'bower_components/jquery-migrate/jquery-migrate.js',
