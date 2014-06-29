@@ -12,7 +12,7 @@ travi.test.testCase('entity list updating', (function () {
 
     function assertMissingResourceExceptionThrown(ex) {
         return (ex.name === 'TraviUiEntityListUpdateFailure' && ex.message === 'Cannot update the entity-list because "resource" was not populated');
-    };
+    }
 
     return {
         'test that exception is thrown if resource not defined in add event': function () {
