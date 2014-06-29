@@ -3,7 +3,18 @@
 
     var dialogEvents = travi.ui.dialog.events;
 
+    function ensureResourceDefined(resource) {
+        if (!resource) {
+            throw {
+                name: 'TraviUiEntityListUpdateFailure',
+                message: 'Cannot update the entity-list because "resource" was not populated'
+            };
+        }
+    }
+
     function requestResourceAndThen(resource, callback) {
+        ensureResourceDefined(resource);
+
         $.ajax({
             url: resource,
             type: 'get',
@@ -43,6 +54,7 @@
             },
             success: function (eventData) {
                 if (wasRemove(eventData.key)) {
+                    ensureResourceDefined(eventData.resource);
                     removeResourceFromList(eventData.resource);
                 } else if (wasEdit(eventData.key)) {
                     updateResourceInList(eventData.resource);

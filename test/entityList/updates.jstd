@@ -10,7 +10,42 @@ travi.test.testCase('entity list updating', (function () {
         resource = any.string(),
         entityCount;
 
+    function assertMissingResourceExceptionThrown(ex) {
+        return (ex.name === 'TraviUiEntityListUpdateFailure' && ex.message === 'Cannot update the entity-list because "resource" was not populated');
+    };
+
     return {
+        'test that exception is thrown if resource not defined in add event': function () {
+            assert.exception(
+                function () {
+                    testEvents.publish(dialogEvents.keys.FORM_RESULT_CREATED, {});
+                },
+                assertMissingResourceExceptionThrown
+            );
+        },
+
+        'test that exception is thrown if resource not defined in update event': function () {
+            assert.exception(
+                function () {
+                    testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
+                        key: 'edit-resource'
+                    });
+                },
+                assertMissingResourceExceptionThrown
+            );
+        },
+
+        'test that exception is thrown if resource not defined in remove event': function () {
+            assert.exception(
+                function () {
+                    testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
+                        key: 'remove-resource'
+                    });
+                },
+                assertMissingResourceExceptionThrown
+            );
+        },
+
         'test that the new entity is requested after a successful addition': function () {
             testEvents.publish(dialogEvents.keys.FORM_RESULT_CREATED, {
                 resource: resource
