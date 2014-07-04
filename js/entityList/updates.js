@@ -31,8 +31,18 @@
         });
     }
 
+    function listIsEmpty($list) {
+        return !$list.find('li').length;
+    }
+
     function removeResourceFromList(resource) {
         $('li.entityBlock[travi-self="' + resource + '"]').remove();
+
+        var $list = $('ol.entityList');
+
+        if (listIsEmpty($list)) {
+            $list.before('<p class="empty-list-message">' + $list.attr('travi-empty-list-message') + '</p>');
+        }
     }
 
     function updateResourceInList(resource) {

@@ -8,6 +8,7 @@ travi.test.testCase('entity list updating', (function () {
 
         ajaxCallbacks,
         resource = any.string(),
+        emptyStateMessage = any.string(),
         entityCount;
 
     function assertMissingResourceExceptionThrown(ex) {
@@ -109,7 +110,8 @@ travi.test.testCase('entity list updating', (function () {
         },
 
         'test that the entity is removed from the list after a successful DELETE': function () {
-            var $entities;
+            var $entities,
+                $emptyStateParagraph;
 
             testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
                 resource: resource,
@@ -118,6 +120,21 @@ travi.test.testCase('entity list updating', (function () {
 
             $entities = $('.entityList li.entityBlock');
             assert.equals($entities.length, entityCount - 1);
+
+            $emptyStateParagraph = $('p.empty-list-message');
+            assert.equals($emptyStateParagraph.length, 1);
+            assert.equals(emptyStateMessage, $emptyStateParagraph.text());
+        },
+
+        'test that the empty state message not show if list not empty after successful removal': function () {
+            $('ol.entityList').append('<li></li>');
+
+            testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
+                resource: resource,
+                key: 'remove-resource'
+            });
+
+            assert.equals($('p.empty-list-message').length, 0);
         },
 
         setUp: function () {
@@ -128,7 +145,7 @@ travi.test.testCase('entity list updating', (function () {
                 ajaxCallbacks.success = options.success;
             });
 
-            $('body').append('<ol class="entityList"><li class="entityBlock" travi-self="' + resource + '">old content</li></ol>');
+            $('body').append('<ol class="entityList" travi-empty-list-message="' + emptyStateMessage + '"><li class="entityBlock" travi-self="' + resource + '">old content</li></ol>');
             entityCount = $('.entityList li').length;
 
             updates.init();
