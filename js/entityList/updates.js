@@ -41,7 +41,7 @@
         var $list = $('ol.entityList');
 
         if (listIsEmpty($list)) {
-            $list.before('<p class="empty-list-message">' + $list.attr('travi-empty-list-message') + '</p>');
+            $list.before('<p class="empty-list-message">' + $list.attr('travi-empty-state-message') + '</p>');
         }
     }
 

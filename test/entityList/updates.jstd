@@ -145,7 +145,7 @@ travi.test.testCase('entity list updating', (function () {
                 ajaxCallbacks.success = options.success;
             });
 
-            $('body').append('<ol class="entityList" travi-empty-list-message="' + emptyStateMessage + '"><li class="entityBlock" travi-self="' + resource + '">old content</li></ol>');
+            $('body').append('<ol class="entityList" travi-empty-state-message="' + emptyStateMessage + '"><li class="entityBlock" travi-self="' + resource + '">old content</li></ol>');
             entityCount = $('.entityList li').length;
 
             updates.init();
