@@ -61,6 +61,7 @@ travi.test.testCase('entity list updating', (function () {
         'test that the added entity is inserted into the list from the response': function () {
             var $entities,
                 addedContent = any.string();
+            $('body').prepend('<p class="empty-list-message"></p>');
             testEvents.publish(dialogEvents.keys.FORM_RESULT_CREATED, {
                 resource: resource
             });
@@ -70,6 +71,7 @@ travi.test.testCase('entity list updating', (function () {
             $entities = $('.entityList li.entityBlock');
             assert.equals($entities.length, entityCount + 1);
             assert.equals($entities.last().text(), addedContent);
+            assert.equals($('p.empty-list-message').length, 0);
         },
 
         'test that the updated data is requested after successful update submission': function () {

@@ -26,6 +26,8 @@
     function addResourceToList(resource) {
         requestResourceAndThen(resource, function (html) {
             $('ol.entityList').append(html);
+
+            $('p.empty-list-message').remove();
         });
     }
 
