@@ -9,7 +9,7 @@ module.exports = function (config) {
             'node_modules/karma-jstd-adapter/jstd-adapter.js',
             'bower_components/travi-test-utils/tools/assert-fix.js',
 
-            'bower_components/jquery/jquery.js',
+            'bower_components/jquery/dist/jquery.js',
             'bower_components/jquery-ui/ui/jquery-ui.js',
             'bower_components/jsrender/jsrender.js',
             'bower_components/jquery-form/jquery.form.js',

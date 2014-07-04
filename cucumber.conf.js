@@ -8,7 +8,7 @@ module.exports = function (config) {
         files: [
             'bower_components/amplify/core/amplify.core.js',
             'bower_components/travi-test-utils/proxies/amplifyProxy.js',
-            'bower_components/jquery/jquery.js',
+            'bower_components/jquery/dist/jquery.js',
             'bower_components/jquery-ui/ui/jquery-ui.js',
             'bower_components/jsrender/jsrender.js',
             'bower_components/jquery-migrate/jquery-migrate.js',
