@@ -9,7 +9,7 @@ travi.test.testCase('form button enhancement', (function () {
 
             buttons.init();
 
-            assert($('input[type=submit]').hasClass('ui-button'));
+            assert.isTrue($('input[type=submit]').hasClass('ui-button'));
         }
     };
 }()));

@@ -1,0 +1,18 @@
+travi.test.testCase('date field enhancements', (function () {
+    'use strict';
+
+    var date = travi.ui.form.date;
+
+    return {
+        'test that date picker added on page load': function () {
+            $('body').append('<input type="date" class="datepicker"/>')
+
+            date.init();
+
+            var $dateInput = $('input[type=date]');
+            assert.isTrue($dateInput.hasClass('hasDatepicker'));
+            assert.equals($('img.ui-datepicker-trigger').attr('src'), '/resources/thirdparty/travi-styles/img/calendar.gif');
+            assert.equals($dateInput.datepicker('option', 'dateFormat'), 'yy-mm-dd');
+        }
+    };
+}()));
