@@ -5,7 +5,7 @@ travi.test.testCase('date field enhancements', (function () {
 
     return {
         'test that date picker added on page load': function () {
-            $('body').append('<input type="date" class="datepicker"/>')
+            $('body').append('<input type="date" class="datepicker"/>');
 
             date.init();
 
