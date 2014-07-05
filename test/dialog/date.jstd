@@ -1,0 +1,37 @@
+travi.test.testCase('datepicker in a dialog', (function () {
+    'use strict';
+
+    var date = travi.ui.form.date,
+        dialogDate = travi.ui.dialog.date,
+        dialogEvents = travi.ui.dialog.events,
+
+        loadCallback;
+
+    return {
+        setUp: function () {
+            sinon.stub(date, 'init');
+            sinon.stub(dialogEvents, 'load', function (callback) {
+                loadCallback = callback;
+            });
+
+            dialogDate.init();
+        },
+
+        tearDown: function () {
+            travi.test.common.restore([
+                date.init,
+                dialogEvents.load
+            ]);
+        },
+
+        'test that date-picker is initialized once the dialog loads': function () {
+            loadCallback();
+
+            assert.calledOnce(date.init);
+        },
+
+        'test that the date-picker is not initialized before the dialog opens': function () {
+            refute.called(date.init);
+        }
+    };
+}()));
