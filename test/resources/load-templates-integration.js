@@ -1,3 +1,3 @@
 travi.templates.init();
 
-travi.templates.preLoad('entityList', '../templates/entity-list.tmpl');
+travi.templates.preLoad('entityList', '/base/test/templates/entity-list.tmpl');
