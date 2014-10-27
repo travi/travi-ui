@@ -36,8 +36,7 @@ module.exports = function (config) {
 
             {pattern: 'test/integration/features/**/*.feature', watched: true, included: false, served: true},
 
-            'bower_components/travi-test-utils/tools/common.js',
-            'bower_components/travi-test-utils/tools/cucumber-world.js',
+            'bower_components/travi-test-utils/tools/*.js',
             {pattern: 'test/integration/features/step_definitions/**/*.js', watched: true, included: true, served: true}
         ],
 

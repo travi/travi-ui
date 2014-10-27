@@ -8,7 +8,7 @@
     "jquery-migrate": "1.2.1"
   },
   "devDependencies": {
-    "travi-test-utils": "latest"
+    "travi-test-utils": "0.5.0"
   },
   "resolutions": {
     "jquery": "1.11.x"
