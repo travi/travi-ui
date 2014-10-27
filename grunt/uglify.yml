@@ -1,0 +1,8 @@
+dist:
+  options:
+    sourceMap: true
+  files:
+    'dist/dialog.min.js':
+      - 'js/dialog/events.js'
+      - 'js/dialog/core.js'
+      - 'js/dialog/**/*.js'

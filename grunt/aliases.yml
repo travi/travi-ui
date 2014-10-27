@@ -1,5 +1,10 @@
+build:
+  - uglify
+  - karma:dist
+
 gates:
   - jslint
-  - karma
+  - karma:unit
+  - karma:integration
 
 default: gates

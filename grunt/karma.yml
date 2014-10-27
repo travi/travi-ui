@@ -22,3 +22,15 @@ integration:
   configFile: cucumber.conf.js
   singleRun: true
 
+
+dist:
+  configFile: 'dialog.conf.js'
+  singleRun: true
+
+  reporters:
+    - 'progress'
+    - 'junit'
+
+  junitReporter:
+    outputFile: 'logs/dialog.xml'
+
