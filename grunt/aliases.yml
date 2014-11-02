@@ -1,6 +1,7 @@
 build:
   - uglify
-  - karma:dist
+  - karma:dialog
+  - karma:form
 
 gates:
   - jslint

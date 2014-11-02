@@ -6,3 +6,5 @@ dist:
       - 'js/dialog/events.js'
       - 'js/dialog/core.js'
       - 'js/dialog/**/*.js'
+    'dist/form.min.js':
+      - 'js/form/**/*.js'

@@ -23,14 +23,26 @@ integration:
   singleRun: true
 
 
-dist:
-  configFile: 'dialog.conf.js'
+dialog:
+  configFile: dialog.conf.js
   singleRun: true
 
   reporters:
-    - 'progress'
-    - 'junit'
+    - progress
+    - junit
 
   junitReporter:
     outputFile: 'logs/dialog.xml'
+
+
+form:
+  configFile: form.conf.js
+  singleRun: true
+
+  reporters:
+    - progress
+    - junit
+
+  junitReporter:
+    outputFile: 'logs/form.xml'
 
