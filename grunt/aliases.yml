@@ -6,6 +6,6 @@ build:
 gates:
   - jslint
   - karma:unit
-  - karma:integration
+#  - karma:integration
 
 default: gates
