@@ -4,4 +4,4 @@ travi.templates.preLoad('update-item', '/base/test/templates/stub-update-item.tm
 travi.templates.preLoad('entityList', '/base/test/templates/entity-list.tmpl');
 travi.templates.preLoad('pagination', '/base/test/templates/pagination.tmpl');
 
-travi.tempaltes.preLoad = function () {};
+travi.tempaltes.preLoad = $.noop;
