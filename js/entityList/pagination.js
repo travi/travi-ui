@@ -1,6 +1,6 @@
 /*jslint unparam: true */
 (function (travi) {
-    "use strict";
+    'use strict';
 
     var constants = travi.constants,
         templates = travi.templates,

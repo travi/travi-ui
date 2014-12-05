@@ -1,5 +1,5 @@
 (function (travi) {
-    "use strict";
+    'use strict';
 
     var constants = travi.constants,
         eventsModule = travi.events,
