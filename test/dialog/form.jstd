@@ -17,7 +17,19 @@ travi.test.testCase('dialog forms', (function () {
         formMethod = any.string(),
         fieldName = any.string(),
         fieldValue = any.string(),
-        $content = $('<section><form method="' + formMethod + '" action="' + formAction + '" travi-form-key="' + formKey + '"><input name="' + fieldName + '" value="' + fieldValue + '"></input></form></section>');
+        $content = $(
+            '<section><form method="'
+                + formMethod
+                + '" action="'
+                + formAction
+                + '" travi-form-key="'
+                + formKey
+                + '"><input name="'
+                + fieldName
+                + '" value="'
+                + fieldValue
+                + '"></input></form></section>'
+        );
 
     function launchDialogAndSubmitForm() {
         testEvents.publish(dialogEvents.keys.LOADED, {

@@ -68,7 +68,11 @@ travi.test.testCase('dialog api tests', (function () {
         'test that clicking cancel link from inserted content closes dialog': function () {
             var click = new $.Event('click');
             dialog.loadFromUrl({});
-            successHandler('<form id="' + insertedId + '"><ol class="actions"><li><a href="#" class="cancel">Cancel</a></li></ol></form>');
+            successHandler(
+                '<form id="'
+                    + insertedId
+                    + '"><ol class="actions"><li><a href="#" class="cancel">Cancel</a></li></ol></form>'
+            );
 
             $('.ui-dialog a.cancel').trigger(click);
 

@@ -107,7 +107,7 @@ travi.test.testCase('EntityListTests', (function () {
             assert.equals(this.entities.length, $('.entityList > li.entityBlock').length);
             assert.equals(1, $('.entityList > li.someType').length);
             assert.equals(this.entities.length, $('.entityList li.remove-item').length);
-            assert.equals(0, $("li.remove-item form").length);
+            assert.equals(0, $('li.remove-item form').length);
 
             this.assertEventPublished();
         },
@@ -142,7 +142,7 @@ travi.test.testCase('EntityListTests', (function () {
                         entities: testCase.entities,
                         offset: 10,
                         limit: 5,
-                        totalEntities: "34"
+                        totalEntities: '34'
                     }
                 });
             });

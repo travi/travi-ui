@@ -1,4 +1,4 @@
-travi.test.testCase("PaginationTest", (function () {
+travi.test.testCase('PaginationTest', (function () {
     'use strict';
 
     function assertThatOtherPaginationDataUnchanged(otherNext, otherPrev) {

@@ -11,7 +11,10 @@ travi.test.testCase('date field enhancements', (function () {
 
             var $dateInput = $('input[type=date]');
             assert.isTrue($dateInput.hasClass('hasDatepicker'));
-            assert.equals($('img.ui-datepicker-trigger').attr('src'), '/resources/thirdparty/travi-styles/img/calendar.gif');
+            assert.equals(
+                $('img.ui-datepicker-trigger').attr('src'),
+                '/resources/thirdparty/travi-styles/img/calendar.gif'
+            );
             assert.equals($dateInput.datepicker('option', 'dateFormat'), 'yy-mm-dd');
         }
     };

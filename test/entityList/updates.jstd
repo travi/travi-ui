@@ -12,7 +12,10 @@ travi.test.testCase('entity list updating', (function () {
         entityCount;
 
     function assertMissingResourceExceptionThrown(ex) {
-        return (ex.name === 'TraviUiEntityListUpdateFailure' && ex.message === 'Cannot update the entity-list because "resource" was not populated');
+        return (
+            ex.name === 'TraviUiEntityListUpdateFailure'
+            && ex.message === 'Cannot update the entity-list because "resource" was not populated'
+        );
     }
 
     return {
@@ -112,7 +115,6 @@ travi.test.testCase('entity list updating', (function () {
         'test that the entity is removed from the list after a successful DELETE': function () {
             var $entities,
                 $emptyStateParagraph;
-
             testEvents.publish(dialogEvents.keys.FORM_SUCCESS, {
                 resource: resource,
                 key: 'remove-resource'
@@ -145,7 +147,13 @@ travi.test.testCase('entity list updating', (function () {
                 ajaxCallbacks.success = options.success;
             });
 
-            $('body').append('<ol class="entityList" travi-empty-state-message="' + emptyStateMessage + '"><li class="entityBlock" travi-self="' + resource + '">old content</li></ol>');
+            $('body').append(
+                '<ol class="entityList" travi-empty-state-message="'
+                    + emptyStateMessage
+                    + '"><li class="entityBlock" travi-self="'
+                    + resource
+                    + '">old content</li></ol>'
+            );
             entityCount = $('.entityList li').length;
 
             updates.init();
