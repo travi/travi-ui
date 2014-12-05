@@ -5,6 +5,6 @@ dist:
 test:
   src:
     - 'test/**/*.jstd'
-#    - 'test/**/*.js'
+    - 'test/**/*.js'
   options:
     config: true

@@ -26,7 +26,13 @@ addStepDefinitions(function (scenario) {
             [
                 200,
                 {},
-                '<section id="dialogContent"><form action="' + formSubmission + '" method="post" travi-form-key="' + key + '"><ol><li><input name="' + fieldName + '"></li></ol></form></section>'
+                '<section id="dialogContent"><form action="'
+                    + formSubmission
+                    + '" method="post" travi-form-key="'
+                    + key
+                    + '"><ol><li><input name="'
+                    + fieldName
+                    + '"></li></ol></form></section>'
             ]
         );
 
@@ -51,7 +57,7 @@ addStepDefinitions(function (scenario) {
     });
 
     scenario.When(/^the form has been submitted with a failure$/, function (callback) {
-        this.getServer().respondWith('post', formSubmission, [500, {}, "Failure"]);
+        this.getServer().respondWith('post', formSubmission, [500, {}, 'Failure']);
 
         $('form').submit();
 

@@ -21,13 +21,23 @@ addStepDefinitions(function (scenario) {
 
     scenario.Before(function (callback) {
         this.getServer().respondWith('get', addedEntity, [200, {}, '<li class="entityBlock"></li>']);
-        this.getServer().respondWith('get', updatedEntity, [200, {}, '<li class="entityBlock" travi-self="' + updatedEntity + '">' + newContent + '</li>']);
+        this.getServer().respondWith(
+            'get',
+            updatedEntity,
+            [200, {}, '<li class="entityBlock" travi-self="' + updatedEntity + '">' + newContent + '</li>']
+        );
 
         callback();
     });
 
     scenario.Given(/^on an entity list page$/, function (callback) {
-        $('#scratch').append('<ol class="entityList"><li class="entityBlock" travi-self="' + updatedEntity + '">old content<ul class="actions"><li class="remove-item"><a href="' + removeLink + '" class="dialog-target">Remove</a></li></ul> </li></ol>');
+        $('#scratch').append(
+            '<ol class="entityList"><li class="entityBlock" travi-self="'
+                + updatedEntity
+                + '">old content<ul class="actions"><li class="remove-item"><a href="'
+                + removeLink
+                + '" class="dialog-target">Remove</a></li></ul> </li></ol>'
+        );
 
         entityCount = $('ol.entityList > li').length;
 
@@ -35,7 +45,15 @@ addStepDefinitions(function (scenario) {
     });
 
     scenario.Given(/^the remove link was clicked on one of the entities in the list$/, function (callback) {
-        this.getServer().respondWith('get', removeLink, [200, {}, '<div><form travi-form-key="remove-resource" method="post" action="' + removedEntity + '"></form></div>']);
+        this.getServer().respondWith(
+            'get',
+            removeLink,
+            [
+                200,
+                {},
+                '<div><form travi-form-key="remove-resource" method="post" action="' + removedEntity + '"></form></div>'
+            ]
+        );
 
         $('.entityBlock:first .remove-item a').click();
 
