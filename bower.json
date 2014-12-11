@@ -1,6 +1,7 @@
 {
   "name": "travi-ui",
   "version": "0.14.1",
+  "license": "MIT",
   "ignore": [
     "test",
     "*.conf.js",
