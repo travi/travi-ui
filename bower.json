@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "jquery-ui": "1.10.x",
-    "travi-core": "0.11.1",
+    "travi-core": "0.11.2",
     "wymeditor": "v1.0.0b6",
     "jquery-migrate": "1.2.1"
   },
