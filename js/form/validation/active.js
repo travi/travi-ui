@@ -2,7 +2,9 @@
     'use strict';
 
     function init() {
-        $('form').validate();
+        $('form').validate({
+            errorClass: 'ui-state-error'
+        });
     }
 
     travi.register('ui.form.validation.active', {

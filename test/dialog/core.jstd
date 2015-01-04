@@ -28,6 +28,7 @@ travi.test.testCase('dialog api tests', (function () {
                 travi.events.publish,
                 $.prototype.dialog
             ]);
+            $(document).unbind("focusin.dialog");
         },
 
         'test that html requested from url': function () {
