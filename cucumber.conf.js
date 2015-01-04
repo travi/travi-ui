@@ -23,7 +23,7 @@ module.exports = function (config) {
             {pattern: 'test/templates/**/*.tmpl', included: false},
             'test/resources/load-templates-integration.js',
 
-            'js/form/*.js',
+            'js/form/**/*.js',
 
             'js/dialog/events.js',
             'js/dialog/core.js',
