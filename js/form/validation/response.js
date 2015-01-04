@@ -18,7 +18,7 @@
         }
     }
 
-    travi.register('ui.form.validation.mapper', {
+    travi.register('ui.form.validation.response', {
         showErrors: showErrors
     });
 }(travi));

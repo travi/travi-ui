@@ -1,7 +1,7 @@
 travi.test.testCase('validation mapper', (function () {
     'use strict';
 
-    var validationMapper = travi.ui.form.validation.mapper,
+    var validationMapper = travi.ui.form.validation.response,
         any = travi.test.any,
 
         fieldName = any.string();

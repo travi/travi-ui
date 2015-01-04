@@ -4,7 +4,7 @@
     var events = travi.events,
         dialog = travi.ui.dialog.core,
         dialogEvents = travi.ui.dialog.events,
-        validationMapper = travi.ui.form.validation.mapper;
+        validationMapper = travi.ui.form.validation.response;
 
     function getValidationErrorsFrom(xhr) {
         return JSON.parse(xhr.responseText).form.errors;

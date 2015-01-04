@@ -5,7 +5,7 @@ travi.test.testCase('dialog forms', (function () {
         events = travi.events,
         dialogEvents = travi.ui.dialog.events,
         dialog = travi.ui.dialog.core,
-        validationMapper = travi.ui.form.validation.mapper,
+        validationMapper = travi.ui.form.validation.response,
 
         testEvents = travi.test.events,
         any = travi.test.any,
