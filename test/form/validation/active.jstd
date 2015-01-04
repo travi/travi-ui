@@ -1,0 +1,17 @@
+travi.test.testCase('Tests for client-side validation of existing form', (function () {
+    'use strict';
+
+    var activeValidation = travi.ui.form.validation.active;
+
+    return {
+        setUp: function () {
+            $('body').append('<form>');
+        },
+
+        'test that form is set to be validated upon page load': function () {
+            activeValidation.init();
+
+            assert.equals(1, $('form[novalidate=novalidate]').length);
+        }
+    };
+}()));
