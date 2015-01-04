@@ -11,6 +11,7 @@ module.exports = function (config) {
             'bower_components/jquery/dist/jquery.js',
             'bower_components/jquery-ui/ui/jquery-ui.js',
             'bower_components/jsrender/jsrender.js',
+            'bower_components/jquery.validation/jquery.validate.js',
             'bower_components/jquery-migrate/jquery-migrate.js',
             'bower_components/wymeditor/dist/wymeditor/jquery.wymeditor.js',
 
