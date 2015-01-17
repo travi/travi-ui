@@ -5,9 +5,8 @@ travi.test.testCase('Tests for client-side validation of existing form', (functi
 
     return {
         setUp: function () {
-            $('body').append(
-                '<form><input required /></form>'
-            );
+            $('body').append('<form></form>');
+
             activeValidation.init();
         },
 
@@ -16,11 +15,32 @@ travi.test.testCase('Tests for client-side validation of existing form', (functi
         },
 
         'test that proper class is used for errors': function () {
-            $('form').submit();
+            var $form = $('form');
+            $form.append('<input required />');
+
+            $form.submit();
 
             var $errorLabel = $('label');
             assert.equals(1, $errorLabel.length);
             assert.isTrue($errorLabel.hasClass('ui-state-error'));
+        },
+
+        'test that error label placed after input': function () {
+            var $form = $('form');
+            $form.append('<input required />');
+
+            $form.submit();
+
+            assert.isTrue($('input').next().is($('label')));
+        },
+
+        'test that error label placed after group when "choices" list': function () {
+            var $form = $('form');
+            $form.append('<ol class="choices"><li><input name="anything" type="checkbox" required /></li></ol>');
+
+            $form.submit();
+
+            assert.isTrue($('.choices').next().is($('label')));
         }
     };
 }()));
