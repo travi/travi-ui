@@ -15,12 +15,13 @@ travi.test.testCase('Tests for client-side validation of existing form', (functi
         },
 
         'test that proper class is used for errors': function () {
-            var $form = $('form');
+            var $errorLabel,
+                $form = $('form');
             $form.append('<input required />');
 
             $form.submit();
 
-            var $errorLabel = $('label');
+            $errorLabel = $('label');
             assert.equals(1, $errorLabel.length);
             assert.isTrue($errorLabel.hasClass('ui-state-error'));
         },
