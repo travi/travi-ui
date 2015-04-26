@@ -46,3 +46,6 @@ form:
   junitReporter:
     outputFile: 'logs/form.xml'
 
+mocha:
+  configFile: mocha.conf.js
+  singleRun: true

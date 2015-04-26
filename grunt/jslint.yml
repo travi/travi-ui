@@ -7,6 +7,7 @@ config:
   options:
     errorsOnly: true
     checkstyle: logs/jslint-config.xml
+
 dist:
   src: 'js/**/*.js'
   directives:
@@ -19,10 +20,12 @@ dist:
   options:
     errorsOnly: true
     checkstyle: logs/jslint-ui.xml
+
 test:
   src:
     - 'test/**/*.jstd'
     - 'test/**/*.js'
+    - '!test/integration/mocha-given/setup.js'
   directives:
     browser: true
     regexp: true
