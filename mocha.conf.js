@@ -11,8 +11,6 @@ module.exports = function (config) {
         },
 
         files: [
-            'test/integration/mocha-given/setup.js',
-
             'test/integration/**/*.coffee'
         ],
 
