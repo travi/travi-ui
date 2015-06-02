@@ -18,13 +18,6 @@ module.exports = function (config) {
             'bower_components/travi-test-utils/tools/cucumber-world.js'
         ],
 
-        //client: {
-        //    mocha: {
-        //        reporter: 'spec',
-        //        ui: 'mocha-given'
-        //    }
-        //},
-
         browsers: ['PhantomJS']
     });
 };
