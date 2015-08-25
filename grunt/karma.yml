@@ -11,7 +11,7 @@ unit:
     - coverage
 
   junitReporter:
-    outputFile: 'logs/ui.xml'
+    outputDir: 'logs/'
 
   coverageReporter:
     type: lcov
