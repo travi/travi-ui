@@ -7,3 +7,5 @@ travi-ui
 [![Dependency Status](http://img.shields.io/gemnasium/travi/travi-ui.svg?style=flat)](https://gemnasium.com/travi/travi-ui)
 
 [![Bower version](http://img.shields.io/bower/v/travi-ui.svg?style=flat)](http://bower.io/search/?q=travi-ui)
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
